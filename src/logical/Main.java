@@ -1,16 +1,26 @@
+package logical;
+
 import view.ScheduleView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
+        Scanner scanner = new Scanner(System.in);
         //Prepare view
         final ScheduleView view = new ScheduleView();
+        System.out.println("_-_-_- WorkshopScheduler -_-_-_\n");
+        System.out.print("Introduce la ubicación del fichero: ");
+        String rutaFile = scanner.nextLine();
+        
+        //  System.out.println(false);
+
 
         //Show view
         SwingUtilities.invokeLater(() -> view.setVisible(true));
@@ -18,6 +28,7 @@ public class Main {
         /*****************
             SAMPLE CODE
          ****************/
+
         //Set cells content
         int[] categories = new int[5];
         float cost = 0;
