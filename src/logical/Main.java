@@ -1,26 +1,66 @@
 package logical;
 
+import algorithm.Configs;
 import view.ScheduleView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
+        Workshops configuracion;
+        boolean existe = false;
+        List<String> rutas = null;
+        String selectedFile;
         Scanner scanner = new Scanner(System.in);
         //Prepare view
         final ScheduleView view = new ScheduleView();
+        System.out.println("--------------------------------------------------------------");
         System.out.println("_-_-_- WorkshopScheduler -_-_-_\n");
-        System.out.print("Introduce la ubicación del fichero: ");
-        String rutaFile = scanner.nextLine();
-        
-        //  System.out.println(false);
+        System.out.println("This files contain workshops information");
+         try (Stream<Path> walk = Files.walk(Paths.get("resources"))) {
 
+            rutas = walk.filter(Files::isRegularFile)
+                    .map(x -> x.toString()).collect(Collectors.toList());
+
+            for (String filename: rutas) {
+                System.out.println("- "+filename.substring(10)+" --> ruta valida: "+filename);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("--------------------------------------------------------------");
+         do {
+             System.out.print("Introduce una ruta de de algún fichero mostrado anteriormente: \n");
+             selectedFile = scanner.nextLine();
+             for (String ruta: rutas) {
+                 System.out.println(ruta+"   "+selectedFile);
+                 if (ruta.equals(selectedFile)){
+                     existe = true;
+                 }else{
+                 }
+                 if (!existe){
+                     System.out.println(":( Ruta no válida, vuelve a intentarlo");
+                 }
+             }
+         }while (!existe);
+
+         configuracion = Configs.parseToObject(selectedFile);
+
+        System.out.println(configuracion);
 
         //Show view
         SwingUtilities.invokeLater(() -> view.setVisible(true));

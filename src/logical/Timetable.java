@@ -1,8 +1,9 @@
 package logical;
 
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 public class Timetable {
 
@@ -42,7 +43,7 @@ public class Timetable {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("day", day).append("hour", hour).toString();
+        return new ReflectionToStringBuilder(this).append("day", day).append("hour", hour).toString();
     }
 
     @Override

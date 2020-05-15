@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WorkshopSchedulerBase.iml" filepath="$PROJECT_DIR$/WorkshopSchedulerBase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pom/pom.iml" filepath="$PROJECT_DIR$/pom/pom.iml" />
     </modules>
   </component>
 </project>
