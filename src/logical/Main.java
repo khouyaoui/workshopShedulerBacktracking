@@ -1,12 +1,12 @@
 package logical;
-
+import Model.Workshops;
 import algorithm.Configs;
 import view.ScheduleView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputFilter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,24 +18,24 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
-
-    public static void main(String[] args) throws FileNotFoundException {
-
-        Workshops configuracion;
+     public static void main(String[] args) throws FileNotFoundException {
+        // vars
+         Configs configs = new Configs();
+        Workshops workshops;
         boolean existe = false;
         List<String> rutas = null;
         String selectedFile;
         Scanner scanner = new Scanner(System.in);
         //Prepare view
         final ScheduleView view = new ScheduleView();
+        // user interaction
         System.out.println("--------------------------------------------------------------");
         System.out.println("_-_-_- WorkshopScheduler -_-_-_\n");
         System.out.println("This files contain workshops information");
-         try (Stream<Path> walk = Files.walk(Paths.get("resources"))) {
 
+         try (Stream<Path> walk = Files.walk(Paths.get("resources"))) {
             rutas = walk.filter(Files::isRegularFile)
                     .map(x -> x.toString()).collect(Collectors.toList());
-
             for (String filename: rutas) {
                 System.out.println("- "+filename.substring(10)+" --> ruta valida: "+filename);
             }
@@ -47,20 +47,24 @@ public class Main {
              System.out.print("Introduce una ruta de de algún fichero mostrado anteriormente: \n");
              selectedFile = scanner.nextLine();
              for (String ruta: rutas) {
-                 System.out.println(ruta+"   "+selectedFile);
                  if (ruta.equals(selectedFile)){
                      existe = true;
-                 }else{
                  }
-                 if (!existe){
-                     System.out.println(":( Ruta no válida, vuelve a intentarlo");
-                 }
+             }
+             if (!existe){
+                 System.out.println(":( Ruta no válida, vuelve a intentarlo");
              }
          }while (!existe);
 
-         configuracion = Configs.parseToObject(selectedFile);
+        workshops = configs.parseToObject(selectedFile);
 
-        System.out.println(configuracion);
+         int configuracion [] = new int[workshops.getWorkshops().size()];
+
+         int k = 0;
+
+         configs.backTracking(configuracion, k);
+
+         System.out.println();
 
         //Show view
         SwingUtilities.invokeLater(() -> view.setVisible(true));
@@ -125,6 +129,13 @@ public class Main {
             view.setCategoryContent(i + 1, categories[i]);
         }
 
+
+
+
+
     }
+
+
+
 
 }

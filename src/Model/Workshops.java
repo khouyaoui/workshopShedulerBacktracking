@@ -1,5 +1,5 @@
 
-package logical;
+package Model;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -14,7 +14,9 @@ public class Workshops {
 
     private List<Workshop> workshops = new ArrayList<>();
 
-    private List<List<Integer>> compatibilityMatrix = new ArrayList<>();
+    // private List<List<Integer>> compatibilityMatrix = new ArrayList<>();
+
+    private Integer [][] compatibilityMatrix;
 
     /**
      * No args constructor for use in serialization
@@ -28,7 +30,7 @@ public class Workshops {
      * @param workshops
      * @param compatibilityMatrix
      */
-    public Workshops(List<Workshop> workshops, List<List<Integer>> compatibilityMatrix) {
+    public Workshops(List<Workshop> workshops, Integer [][] compatibilityMatrix) {
         super();
         this.workshops = workshops;
         this.compatibilityMatrix = compatibilityMatrix;
@@ -42,11 +44,11 @@ public class Workshops {
         this.workshops = workshops;
     }
 
-    public List<List<Integer>> getCompatibilityMatrix() {
+    public Integer[][] getCompatibilityMatrix() {
         return compatibilityMatrix;
     }
 
-    public void setCompatibilityMatrix(List<List<Integer>> compatibilityMatrix) {
+    public void setCompatibilityMatrix(Integer [][] compatibilityMatrix) {
         this.compatibilityMatrix = compatibilityMatrix;
     }
 

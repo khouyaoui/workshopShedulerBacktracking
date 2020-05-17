@@ -1,4 +1,4 @@
-package logical;
+package Model;
 
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -19,6 +19,7 @@ public class Timetable {
      * @param hour horas
      * @param day dias
      */
+
     public Timetable(Integer day, Integer hour) {
         super();
         this.day = day;
@@ -62,5 +63,6 @@ public class Timetable {
         Timetable rhs = ((Timetable) other);
         return new EqualsBuilder().append(hour, rhs.hour).append(day, rhs.day).isEquals();
     }
+
 
 }
