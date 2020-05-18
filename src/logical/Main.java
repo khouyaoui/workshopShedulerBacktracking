@@ -58,19 +58,21 @@ public class Main {
 
         workshops = configs.parseToObject(selectedFile);
 
-            int configuracion [] = new int[workshops.getWorkshops().size()];
+            int configuracion [] = new int[workshops.getWorkshops().size()+1];
 
             int k = 0;
 
+         for (int i = 0; i < configuracion.length; i++) {
              configs.backTracking(configuracion, k);
+         }
 
 
 
 
-         System.out.println();
 
-        //Show view
-        SwingUtilities.invokeLater(() -> view.setVisible(true));
+         System.exit(0);
+
+         SwingUtilities.invokeLater(() -> view.setVisible(true));
 
         /*****************
             SAMPLE CODE

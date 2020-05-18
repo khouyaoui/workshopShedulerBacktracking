@@ -1,16 +1,23 @@
 package algorithm;
 
+import Model.Schedule;
 import Model.Workshop;
 import com.google.gson.Gson;
 import Model.Workshops;
+import com.google.gson.internal.bind.util.ISO8601Utils;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Configs {
 
-    List<Workshop> schedule;  // h fin
+    int soluciones = 0;
+
+    ArrayList <Schedule> schedules = new ArrayList<>();
+
     Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
 
     public Workshops parseToObject(String rutaValida) throws FileNotFoundException {
@@ -20,9 +27,7 @@ public class Configs {
     }
 
 
-
-
-    public boolean buena( int configuracion [], int k) {  // array de config y una posición dada
+    public boolean buena( int configuracion[] , int k) {  // array de config y una posición dada
 
         int indice = 0;
 
@@ -30,89 +35,90 @@ public class Configs {
 
         boolean incompatible = true;
 
-        if(configuracion[k] == 0){
+        if (configuracion[k] == 0) {
             return true;
         }
-        while(indice < k && libre){
+        while (indice < k && libre) {
 
+            //if (configuracion[indice] == 1) {
 
-            if (configuracion[indice] == 1){
-
-                if (workshops.getCompatibilityMatrix()[indice][k] == 1){ // error solved
+                if (workshops.getCompatibilityMatrix()[indice][k-1] == 1) { // error solved  (-1 para que no salga de matx 0....n-1)
 
                     incompatible = false;
 
-                    if (workshops.getWorkshops().get(indice).getTimetable().equals( workshops.getWorkshops().get(k).getTimetable())){
+                    if (workshops.getWorkshops().get(indice).getTimetable().equals(workshops.getWorkshops().get(k-1).getTimetable())) {  //implementado paara comprar 2 objects
 
                         libre = false;
                     }
 
                 }
-            }
-            indice ++;
+            //}
+            indice++;
         }
 
         return (libre && !incompatible);
     }
 
-    public boolean solucion(int configuracion [], int k){
+    public boolean solucion(int configuracion[], int k) {
 
-        if (k == workshops.getWorkshops().size()){
+        if (k == workshops.getWorkshops().size()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public void seguienteHermano(int configuracion [], int k){
-        configuracion [k]++;   // = configuracion [k]+1 ; // decidir ir ws
+    public void seguienteHermano(int configuracion[], int k) {
+        configuracion[k]++;   // = configuracion [k]+1 ; // decidir ir ws
     }
 
-    public void prepararRecorrigoNivel(int configuracion [], int k){
-        configuracion [k] = -1;
+    public void prepararRecorrigoNivel(int configuracion[], int k) {
+        configuracion[k] = -1;
     }
     // vector de present talleres config [0.1.2.3.4.5.6.7.8.n]
 
-    public boolean haySucesor(int configuracion [], int k) {
-        return configuracion [k] < 1;
+    public boolean haySucesor(int configuracion[], int k) {
+        return configuracion[k] != 1 && configuracion[k] != 0;
 
     }
 
-    public void tratarSolucion(int configuracion [], int k){
-
-        configuracion[k] = 1;
-
-    }
-
-    public void backTracking (int[] configuracion, int k) {
-
-        prepararRecorrigoNivel(configuracion,k);
-
-        while (haySucesor(configuracion,k)){
-
-            seguienteHermano(configuracion,k);
-
-            if (k == workshops.getWorkshops().size()){
-
-                if (buena(configuracion,k)){
-                    tratarSolucion(configuracion, k);
-                    System.out.println("buena");
-                }else{
-                    System.out.println("not s");
-                }
-            }
-            if (k < workshops.getWorkshops().size()){
-
-                if (buena(configuracion, k)){
-
-                    backTracking(configuracion, k); // rec
-
-                  }else{
-                    
-                    //nada
-                }
+    public void tratarSolucion(int configuracion[], int k) {
+             //schedule.add(workshops.getWorkshops().get(k));
+        ArrayList <Workshop> workshopsWrapper = null;
+        for (int i = 0; i < configuracion.length; i++) {
+            if (configuracion[i] == 1){
+                workshopsWrapper.add(workshops.getWorkshops().get(i));
             }
         }
-
+        Schedule scheduleWrapper = new Schedule(workshopsWrapper);
+        schedules.add(scheduleWrapper);
     }
+
+    public void backTracking(int[] configuracion, int k) {
+
+        prepararRecorrigoNivel(configuracion, k);
+
+        while (haySucesor(configuracion, k)) {
+
+            seguienteHermano(configuracion, k);
+
+            if (k == configuracion.length-1) {
+
+                if (buena(configuracion, k)) {
+                    tratarSolucion(configuracion, k);
+
+                    System.out.println("T buena");
+                } else {
+                    System.out.println("false not s");
+                }
+            }
+            if (k < configuracion.length-1) {
+
+                if (buena(configuracion, k)) {
+                    backTracking(configuracion, k+1); // rec
+                }
+                //nada
+            }
+        }
+     }
 }
