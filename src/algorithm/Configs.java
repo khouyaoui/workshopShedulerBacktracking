@@ -46,10 +46,20 @@ public class Configs {
 
                     incompatible = false;
 
-                    if (workshops.getWorkshops().get(indice).getTimetable().equals(workshops.getWorkshops().get(k-1).getTimetable())) {  //implementado paara comprar 2 objects
+                     //implementado paara comprar 2 objects
+                    for (int i = 0; i < workshops.getWorkshops().get(indice).getTimetable().size();i++){
 
-                        libre = false;
+                             if (workshops.getWorkshops().get(indice).getTimetable().get(i).equals(workshops.getWorkshops().get(k).getTimetable())) {
+                                 libre = false;
+                             }
                     }
+                    for (int i = 0; i < workshops.getWorkshops().get(k).getTimetable().size();i++){
+
+                        if (workshops.getWorkshops().get(k).getTimetable().get(i).equals(workshops.getWorkshops().get(indice).getTimetable())) {
+                            libre = false;
+                        }
+                    }
+
 
                 }
             //}
@@ -69,22 +79,25 @@ public class Configs {
     }
 
     public void seguienteHermano(int configuracion[], int k) {
+
         configuracion[k]++;   // = configuracion [k]+1 ; // decidir ir ws
     }
 
     public void prepararRecorrigoNivel(int configuracion[], int k) {
-        configuracion[k] = -1;
+        configuracion[k] = - 1;
     }
     // vector de present talleres config [0.1.2.3.4.5.6.7.8.n]
 
     public boolean haySucesor(int configuracion[], int k) {
-        return configuracion[k] != 1 && configuracion[k] != 0;
+
+        return configuracion[k] < 1;
 
     }
 
     public void tratarSolucion(int configuracion[], int k) {
-             //schedule.add(workshops.getWorkshops().get(k));
-        ArrayList <Workshop> workshopsWrapper = null;
+
+        ArrayList <Workshop> workshopsWrapper = new ArrayList<>();
+
         for (int i = 0; i < configuracion.length; i++) {
             if (configuracion[i] == 1){
                 workshopsWrapper.add(workshops.getWorkshops().get(i));
@@ -100,19 +113,19 @@ public class Configs {
 
         while (haySucesor(configuracion, k)) {
 
+
+
             seguienteHermano(configuracion, k);
 
-            if (k == configuracion.length-1) {
+            if (k == configuracion.length -1) {
 
                 if (buena(configuracion, k)) {
-                    tratarSolucion(configuracion, k);
 
-                    System.out.println("T buena");
-                } else {
-                    System.out.println("false not s");
-                }
+                    tratarSolucion(configuracion, k);
+                    System.out.println();
+                 }
             }
-            if (k < configuracion.length-1) {
+            if ( k < configuracion.length -1) {
 
                 if (buena(configuracion, k)) {
                     backTracking(configuracion, k+1); // rec

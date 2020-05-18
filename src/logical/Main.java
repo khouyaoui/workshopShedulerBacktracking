@@ -30,7 +30,7 @@ public class Main {
         final ScheduleView view = new ScheduleView();
         // user interaction
         System.out.println("--------------------------------------------------------------");
-        System.out.println("_-_-_- WorkshopScheduler -_-_-_\n");
+        System.out.println("-_-_--_--_--_-_--_--_ WorkshopScheduler _--_--_-_-_-_--_--_--_\n");
         System.out.println("This files contain workshops information");
 
          try (Stream<Path> walk = Files.walk(Paths.get("resources"))) {
@@ -58,13 +58,12 @@ public class Main {
 
         workshops = configs.parseToObject(selectedFile);
 
-            int configuracion [] = new int[workshops.getWorkshops().size()+1];
+            int configuracion [] = new int [ workshops.getWorkshops().size() ];
 
             int k = 0;
 
-         for (int i = 0; i < configuracion.length; i++) {
-             configs.backTracking(configuracion, k);
-         }
+            configs.backTracking(configuracion, k);
+
 
 
 
