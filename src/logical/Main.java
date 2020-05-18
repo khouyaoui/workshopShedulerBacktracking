@@ -58,11 +58,14 @@ public class Main {
 
         workshops = configs.parseToObject(selectedFile);
 
-         int configuracion [] = new int[workshops.getWorkshops().size()];
+            int configuracion [] = new int[workshops.getWorkshops().size()];
 
-         int k = 0;
+            int k = 0;
 
-         configs.backTracking(configuracion, k);
+             configs.backTracking(configuracion, k);
+
+
+
 
          System.out.println();
 

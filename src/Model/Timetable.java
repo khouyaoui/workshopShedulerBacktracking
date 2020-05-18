@@ -52,6 +52,7 @@ public class Timetable {
         return new HashCodeBuilder().append(hour).append(day).toHashCode();
     }
 
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

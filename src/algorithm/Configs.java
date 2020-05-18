@@ -22,7 +22,7 @@ public class Configs {
 
 
 
-    public boolean buena(int configuracion [], int k){  // array de config y una posición dada
+    public boolean buena( int configuracion [], int k) {  // array de config y una posición dada
 
         int indice = 0;
 
@@ -38,7 +38,7 @@ public class Configs {
 
             if (configuracion[indice] == 1){
 
-                if (workshops.getCompatibilityMatrix()[indice][k] == 1){ // error detected 
+                if (workshops.getCompatibilityMatrix()[indice][k] == 1){ // error solved
 
                     incompatible = false;
 
@@ -65,25 +65,22 @@ public class Configs {
     }
 
     public void seguienteHermano(int configuracion [], int k){
-        configuracion [k] = configuracion [k+1] ;
+        configuracion [k]++;   // = configuracion [k]+1 ; // decidir ir ws
     }
 
     public void prepararRecorrigoNivel(int configuracion [], int k){
         configuracion [k] = -1;
     }
+    // vector de present talleres config [0.1.2.3.4.5.6.7.8.n]
 
-    public boolean haySucesor(int configuracion [], int k){
+    public boolean haySucesor(int configuracion [], int k) {
         return configuracion [k] < 1;
+
     }
 
     public void tratarSolucion(int configuracion [], int k){
 
-        for (int i = 0; i < configuracion.length; i++) {
-            if (configuracion[i] == 1){
-                schedule.add(workshops.getWorkshops().get(i));
-            }
-        }
-
+        configuracion[k] = 1;
 
     }
 
@@ -98,24 +95,24 @@ public class Configs {
             if (k == workshops.getWorkshops().size()){
 
                 if (buena(configuracion,k)){
-
-                    seguienteHermano(configuracion,k);
+                    tratarSolucion(configuracion, k);
+                    System.out.println("buena");
+                }else{
+                    System.out.println("not s");
                 }
-                tratarSolucion(configuracion, k);
-
             }
             if (k < workshops.getWorkshops().size()){
+
                 if (buena(configuracion, k)){
-                    seguienteHermano(configuracion,k);
-                 }
 
-                backTracking(configuracion, k++);   //rec
+                    backTracking(configuracion, k); // rec
 
+                  }else{
+                    
+                    //nada
+                }
             }
-
         }
 
     }
-
-
 }
