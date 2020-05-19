@@ -55,12 +55,7 @@ public class Timetable {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if (!(other instanceof Timetable)) {
-            return false;
-        }
+
         Timetable rhs = ((Timetable) other);
         return new EqualsBuilder().append(hour, rhs.hour).append(day, rhs.day).isEquals();
     }

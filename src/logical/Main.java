@@ -22,12 +22,14 @@ public class Main {
         // vars
          Configs configs = new Configs();
         Workshops workshops;
+         final ScheduleView view = new ScheduleView();
+
         boolean existe = false;
         List<String> rutas = null;
         String selectedFile;
         Scanner scanner = new Scanner(System.in);
         //Prepare view
-        final ScheduleView view = new ScheduleView();
+
         // user interaction
         System.out.println("--------------------------------------------------------------");
         System.out.println("-_-_--_--_--_-_--_--_ WorkshopScheduler _--_--_-_-_-_--_--_--_\n");
@@ -54,17 +56,20 @@ public class Main {
              if (!existe){
                  System.out.println(":( Ruta no válida, vuelve a intentarlo");
              }
-         }while (!existe);
+         } while (!existe);
 
-        workshops = configs.parseToObject(selectedFile);
+            workshops = configs.parseToObject("resources\\50w.json");
 
             int configuracion [] = new int [ workshops.getWorkshops().size() ];
 
-            int k = 0;
 
-            configs.backTracking(configuracion, k);
+            configs.backTracking(configuracion, 0);
 
+            int [] lastSolucion = configs.soluciones();
 
+             for (int i = 0; i < configuracion.length; i++) {
+                 System.out.print(lastSolucion[i]);
+             }
 
 
 
