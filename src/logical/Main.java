@@ -5,17 +5,13 @@ import view.ScheduleView;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputFilter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+ import static algorithm.Configs.soluciones;
 
 public class Main {
      public static void main(String[] args) throws FileNotFoundException {
@@ -28,8 +24,9 @@ public class Main {
         List<String> rutas = null;
         String selectedFile;
         Scanner scanner = new Scanner(System.in);
-        //Prepare view
 
+         //Prepare view
+/*
         // user interaction
         System.out.println("--------------------------------------------------------------");
         System.out.println("-_-_--_--_--_-_--_--_ WorkshopScheduler _--_--_-_-_-_--_--_--_\n");
@@ -57,21 +54,26 @@ public class Main {
                  System.out.println(":( Ruta no válida, vuelve a intentarlo");
              }
          } while (!existe);
-
-            workshops = configs.parseToObject("resources\\50w.json");
+*/
+            workshops = configs.parseToObject("resources\\100w.json");
 
             int configuracion [] = new int [ workshops.getWorkshops().size() ];
 
-
             configs.backTracking(configuracion, 0);
 
-            int [] lastSolucion = configs.soluciones();
 
-             for (int i = 0; i < configuracion.length; i++) {
-                 System.out.print(lastSolucion[i]);
+
+         int lastS [] = configs.lastS();
+
+         for (int i = 0; i < lastS.length; i++) {
+             System.out.print(lastS[i]);
+         }
+         for (int i = 0; i < workshops.getWorkshops().size(); i++) {
+             if (lastS[i] == 1){
+                 System.out.print(" --> "+workshops.getWorkshops().get(i).getAcronym()+" ");
              }
-
-
+         }
+         System.out.println("\nN so: "+configs.sumarSoluciones(0));
 
 
          System.exit(0);

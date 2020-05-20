@@ -57,21 +57,4 @@ public class Workshops {
         return new ToStringBuilder(this).append("workshops", workshops).append("compatibilityMatrix", compatibilityMatrix).toString();
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(workshops).append(compatibilityMatrix).toHashCode();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if (!(other instanceof Workshops)) {
-            return false;
-        }
-        Workshops rhs = ((Workshops) other);
-        return new EqualsBuilder().append(workshops, rhs.workshops).append(compatibilityMatrix, rhs.compatibilityMatrix).isEquals();
-    }
-
 }

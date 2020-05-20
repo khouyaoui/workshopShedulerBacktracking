@@ -15,71 +15,53 @@ import java.util.List;
 public class Configs {
 
 
-    int soluciones = 0;
-
-    int [] lastSolucion;
-
-    ArrayList<Schedule> schedules = new ArrayList<>();
+    public static int soluciones = 0;
+    int sTotal = 0;
 
     Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
+
 
     public Workshops parseToObject(String rutaValida) throws FileNotFoundException {
         Gson gson = new Gson();
         workshops = gson.fromJson(new FileReader(rutaValida), Workshops.class);
         return workshops;
+
     }
 
+    int[] lastSolucion;
 
-    public boolean buena(int configuracion[], int k) {  // array de config y una posición dada
+    public boolean buena(int configuracion[], int k) {  //
 
         int indice = 0;
-
-        boolean libre = true;
 
         if (configuracion[k] == 0) {
 
             return true;
         }
-        while ( indice < k ) {
+        while (indice < workshops.getWorkshops().size()) {
 
-            //if (configuracion[indice] == 1) {
-
-            if (workshops.getCompatibilityMatrix()[indice][k] == 1) {
-
-                return false;
-
+            if (workshops.getCompatibilityMatrix()[k][indice].equals(0)) {
+                return false;  // aqui hay incompati.  n cal seguir
             }
-            //implementado paara comprar 2 objects
+            for (int i = 0; i < workshops.getWorkshops().get(k).getTimetable().size(); i++) {
 
-            for (int i = 0; i < workshops.getWorkshops().get(indice).getTimetable().size(); i++) {
+                for (int j = 0; j < workshops.getWorkshops().get(indice).getTimetable().size(); j++) {
 
-                for (int j = 0; j < workshops.getWorkshops().get(k).getTimetable().size(); j++) {
+                    if (workshops.getWorkshops().get(k).getTimetable().get(i).getDay().equals(workshops.getWorkshops().get(indice).getTimetable().get(j).getDay()) ||
 
-                    if (workshops.getWorkshops().get(indice).getTimetable().get(i).equals(workshops.getWorkshops().get(k).getTimetable().get(j))) {
+                            workshops.getWorkshops().get(k).getTimetable().get(i).getHour().equals(workshops.getWorkshops().get(indice).getTimetable().get(j).getHour())) {
 
-                        return false;
+                        return true; //
                     }
                 }
             }
 
-        indice ++;
+            indice++;
         }
         return true;
     }
 
-    /*
-        public boolean solucion(int configuracion[], int k) {
-
-            if (k == workshops.getWorkshops().size()) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    */
-
     public void seguienteHermano(int configuracion[], int k) {
-
         configuracion[k]++;   // = configuracion [k]+1 ; // decidir ir ws
     }
 
@@ -93,20 +75,41 @@ public class Configs {
 
     }
 
+
     public void tratarSolucion(int configuracion[], int k) {
 
         soluciones++;
-        lastSolucion = configuracion;
+
+        lastSolucion = new int[configuracion.length];
+
+        System.arraycopy(configuracion, 0, lastSolucion, 0, configuracion.length);
+
+        /*
+        lastSolucion = new int[configuracion.length];
+        for (int i = 0; i < configuracion.length; i++) {
+            lastSolucion[i] = configuracion[i];
+        }  */
+
+        sumarSoluciones(soluciones);
+        System.out.println(soluciones);
 
     }
 
-    public void backTracking(int[] configuracion, int k) {
+    public int sumarSoluciones(int soluciones) {
+        sTotal = sTotal+ soluciones;
+        return sTotal;
+    }
+    public int totalNSoluciones(){
+        return sTotal;
+    }
+
+    public void backTracking(int [] configuracion, int k) {
 
         prepararRecorrigoNivel(configuracion, k);
 
         while (haySucesor(configuracion, k)) {
 
-            seguienteHermano(configuracion, k);
+             seguienteHermano(configuracion, k);
 
             if (k == configuracion.length - 1) {
 
@@ -122,14 +125,15 @@ public class Configs {
 
                     backTracking(configuracion, k + 1); // rec
                 }
-                //nada
             }
         }
     }
 
 
-    public int [] soluciones (){
+    public int[] lastS() {
 
         return lastSolucion;
+
     }
+
 }
