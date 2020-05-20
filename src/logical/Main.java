@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
- import static algorithm.Configs.soluciones;
 
 public class Main {
      public static void main(String[] args) throws FileNotFoundException {
@@ -60,25 +59,21 @@ public class Main {
 
             int configuracion [] = new int [ workshops.getWorkshops().size() ];
 
-            configs.backTracking(configuracion, 1);
+            configs.backTracking(configuracion, 0);
 
+            int lastS [] = configs.lastS();
 
-
-         int lastS [] = configs.lastS();
-
-         for (int i = 0; i < lastS.length; i++) {
+            for (int i = 0; i < lastS.length; i++) {
              System.out.print(lastS[i]);
-         }
-         System.out.println();
-         for (int i = 0; i < workshops.getWorkshops().size(); i++) {
-             if (lastS[i] == 1){
-                 System.out.print(" --> "+workshops.getWorkshops().get(i).getAcronym());
              }
-         }
-         System.out.println("\nN so: "+configs.sumarSoluciones(0));
-
-
-         System.exit(0);
+             System.out.println();
+             for (int i = 0; i < workshops.getWorkshops().size(); i++) {
+                 if (lastS[i] == 1){
+                     System.out.print(" --> "+workshops.getWorkshops().get(i).getAcronym());
+                 }
+             }
+         System.out.println("\n "+configs.totalS());
+            System.exit(0);
 
          SwingUtilities.invokeLater(() -> view.setVisible(true));
 
