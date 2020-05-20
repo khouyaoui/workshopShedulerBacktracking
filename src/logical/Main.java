@@ -1,6 +1,7 @@
 package logical;
 import Model.Workshops;
 import algorithm.Configs;
+import com.google.gson.internal.bind.util.ISO8601Utils;
 import view.ScheduleView;
 import javax.swing.*;
 import java.awt.*;
@@ -55,7 +56,7 @@ public class Main {
              }
          } while (!existe);
 */
-            workshops = configs.parseToObject("resources\\100w.json");
+            workshops = configs.parseToObject("resources\\50w.json");
 
             int configuracion [] = new int [ workshops.getWorkshops().size() ];
 
@@ -68,9 +69,10 @@ public class Main {
          for (int i = 0; i < lastS.length; i++) {
              System.out.print(lastS[i]);
          }
+         System.out.println();
          for (int i = 0; i < workshops.getWorkshops().size(); i++) {
              if (lastS[i] == 1){
-                 System.out.print(" --> "+workshops.getWorkshops().get(i).getAcronym()+" ");
+                 System.out.print(" --> "+workshops.getWorkshops().get(i).getAcronym());
              }
          }
          System.out.println("\nN so: "+configs.sumarSoluciones(0));

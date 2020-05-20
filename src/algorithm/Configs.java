@@ -16,6 +16,7 @@ public class Configs {
 
 
     public static int soluciones = 0;
+
     int sTotal = 0;
 
     Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
@@ -38,27 +39,33 @@ public class Configs {
 
             return true;
         }
-        while (indice < workshops.getWorkshops().size()) {
+
+          while (indice < workshops.getWorkshops().size()) {
 
             if (workshops.getCompatibilityMatrix()[k][indice].equals(0)) {
+
                 return false;  // aqui hay incompati.  n cal seguir
             }
-            for (int i = 0; i < workshops.getWorkshops().get(k).getTimetable().size(); i++) {
+             for (int i = 0; i < workshops.getWorkshops().get(k).getTimetable().size(); i++) {
 
                 for (int j = 0; j < workshops.getWorkshops().get(indice).getTimetable().size(); j++) {
 
-                    if (workshops.getWorkshops().get(k).getTimetable().get(i).getDay().equals(workshops.getWorkshops().get(indice).getTimetable().get(j).getDay()) ||
+                    if (workshops.getWorkshops().get(k).getTimetable().get(i).getDay().equals(workshops.getWorkshops().get(indice).getTimetable().get(j).getDay()) &&
 
-                            workshops.getWorkshops().get(k).getTimetable().get(i).getHour().equals(workshops.getWorkshops().get(indice).getTimetable().get(j).getHour())) {
+                            workshops.getWorkshops().get(k).getTimetable().get(i).getHour().equals(workshops.getWorkshops().get(indice).getTimetable().get(j).getHour())){
 
-                        return true; //
+                            return  true;
+
                     }
+
                 }
+
             }
 
+
             indice++;
-        }
-        return true;
+         }
+        return false;
     }
 
     public void seguienteHermano(int configuracion[], int k) {
@@ -90,16 +97,16 @@ public class Configs {
             lastSolucion[i] = configuracion[i];
         }  */
 
-        sumarSoluciones(soluciones);
-        System.out.println(soluciones);
+                sumarSoluciones(soluciones);
+                System.out.println(soluciones);
+
+
+
 
     }
 
     public int sumarSoluciones(int soluciones) {
         sTotal = sTotal+ soluciones;
-        return sTotal;
-    }
-    public int totalNSoluciones(){
         return sTotal;
     }
 
@@ -131,7 +138,6 @@ public class Configs {
 
 
     public int[] lastS() {
-
         return lastSolucion;
 
     }
