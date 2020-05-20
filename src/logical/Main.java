@@ -60,7 +60,7 @@ public class Main {
 
             int configuracion [] = new int [ workshops.getWorkshops().size() ];
 
-            configs.backTracking(configuracion, 0);
+            configs.backTracking(configuracion, 1);
 
 
 

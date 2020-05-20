@@ -33,16 +33,14 @@ public class Configs {
 
     public boolean buena(int configuracion[], int k) {  //
 
-        int indice = 0;
-
-        if (configuracion[k] == 0) {
+         if (configuracion[k] == 0) {
 
             return true;
         }
-
+        int indice = 0;
           while (indice < workshops.getWorkshops().size()) {
 
-            if (workshops.getCompatibilityMatrix()[k][indice].equals(0)) {
+            if (workshops.getCompatibilityMatrix()[indice][k].equals(0)) {
 
                 return false;  // aqui hay incompati.  n cal seguir
             }
@@ -54,18 +52,17 @@ public class Configs {
 
                             workshops.getWorkshops().get(k).getTimetable().get(i).getHour().equals(workshops.getWorkshops().get(indice).getTimetable().get(j).getHour())){
 
-                            return  true;
+                             return true;
 
                     }
 
                 }
 
             }
-
-
             indice++;
          }
-        return false;
+
+        return true;
     }
 
     public void seguienteHermano(int configuracion[], int k) {
@@ -91,14 +88,9 @@ public class Configs {
 
         System.arraycopy(configuracion, 0, lastSolucion, 0, configuracion.length);
 
-        /*
-        lastSolucion = new int[configuracion.length];
-        for (int i = 0; i < configuracion.length; i++) {
-            lastSolucion[i] = configuracion[i];
-        }  */
+
 
                 sumarSoluciones(soluciones);
-                System.out.println(soluciones);
 
 
 
