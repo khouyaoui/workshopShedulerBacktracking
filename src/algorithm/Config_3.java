@@ -11,9 +11,7 @@ import java.util.Scanner;
 public class Config_3 implements Backtracking {
 
     private Double presupuesto;
-
     int [] configMaxPresupuesto;
-    
     Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
 
     public Workshops parseToObject(String rutaValida) throws FileNotFoundException {
@@ -97,7 +95,7 @@ public class Config_3 implements Backtracking {
         return sum;
     }
 
-    public void gePresopuestoUsuario  (){
+    public void gePresopuestoUsuario(){
 
         Scanner scanner = new Scanner(System.in);
         do {
