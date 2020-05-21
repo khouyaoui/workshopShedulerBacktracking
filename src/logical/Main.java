@@ -1,7 +1,8 @@
 package logical;
 import Model.Workshops;
-import algorithm.Configs;
-import com.google.gson.internal.bind.util.ISO8601Utils;
+import algorithm.Config_1;
+import algorithm.Config_2;
+import algorithm.Config_3;
 import view.ScheduleView;
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +17,9 @@ import java.util.Scanner;
 public class Main {
      public static void main(String[] args) throws FileNotFoundException {
         // vars
-         Configs configs = new Configs();
+         Config_1 configs_1 = new Config_1();
+         Config_2 configs_2 = new Config_2();
+         //Config_3 configs_3 = new Config_3();
         Workshops workshops;
          final ScheduleView view = new ScheduleView();
 
@@ -55,24 +58,34 @@ public class Main {
              }
          } while (!existe);
 */
-            workshops = configs.parseToObject("resources\\50w.json");
+            workshops = configs_1.parseToObject("resources\\50w.json");
 
             int configuracion [] = new int [ workshops.getWorkshops().size() ];
 
-            configs.backTracking(configuracion, 0);
+            configs_1.backTracking(configuracion, 0);
 
-            int lastS [] = configs.lastS();
+            int lastSolucion [] = configs_1.lastSolucion();
 
-            for (int i = 0; i < lastS.length; i++) {
-             System.out.print(lastS[i]);
-             }
-             System.out.println();
+
+
              for (int i = 0; i < workshops.getWorkshops().size(); i++) {
-                 if (lastS[i] == 1){
+                 if (lastSolucion[i] == 1){
                      System.out.print(" --> "+workshops.getWorkshops().get(i).getAcronym());
                  }
              }
-         System.out.println("\n "+configs.totalS());
+            System.out.println("\n soluciones: "+configs_1.totalSolucion());
+
+            System.out.println("---------------------op 2--------------------------");
+            workshops = configs_2.parseToObject("resources\\50w.json");
+            configs_2.backTracking(configuracion, 0);
+
+            int maxHorasConfig [] = configs_2.maxHoras();
+
+            for (int i = 0; i < workshops.getWorkshops().size(); i++) {
+                if (maxHorasConfig [i] == 1) {
+                    System.out.print(" --> " + workshops.getWorkshops().get(i).getAcronym());
+                }
+            }
             System.exit(0);
 
          SwingUtilities.invokeLater(() -> view.setVisible(true));
