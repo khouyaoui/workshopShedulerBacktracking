@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Config_2 implements Backtracking {
 
-    int maxHoras;
+    static int maxHoras = 0;
     int [] configMaxHoras;
     Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
 
@@ -19,7 +19,6 @@ public class Config_2 implements Backtracking {
         Gson gson = new Gson();
         workshops = gson.fromJson(new FileReader(rutaValida), Workshops.class);
         configMaxHoras = new int [workshops.getWorkshops().size()];
-        maxHoras =0;
         return workshops;
 
     }
@@ -53,7 +52,7 @@ public class Config_2 implements Backtracking {
         configuracion[k]++;   // = configuracion [k]+1 ; // decidir ir ws
     }
     public void prepararRecorrigoNivel(int [] configuracion, int k) {
-        configuracion[k] = -1;
+        configuracion [k] = -1;
     }
     public boolean haySucesor(int []configuracion, int k) {
         return configuracion[k] < 1;
@@ -61,7 +60,8 @@ public class Config_2 implements Backtracking {
     }
 
     public void tratarSolucion(int [] configuracion, int k) {
-        if (sumaHoras(configuracion) > maxHoras){
+
+         if (sumaHoras(configuracion) > maxHoras){
             System.arraycopy(configuracion, 0, configMaxHoras, 0, configuracion.length);
             maxHoras = sumaHoras(configuracion);
         }
@@ -87,19 +87,13 @@ public class Config_2 implements Backtracking {
         return configMaxHoras;
     }
 
-    public int sumaHoras(int [] configuracion){
+    public int sumaHoras(int [] configuracion) {
         int sum = 0;
         for (int i = 0; i < configuracion.length; i++) {
-            if (configuracion[i] == 1 ){
-
-                List<Timetable> tmp = workshops.getWorkshops().get(i).getTimetable();
-
-                for (int j = 0; j < tmp.size(); j++) {
-                    sum = sum + tmp.get(j).getHour();
-                }
+            if (configuracion [i] == 1 ){
+                sum += workshops.getWorkshops().get(i).getTimetable().size();
             }
         }
-        System.out.println(sum);
         return sum;
-    }
+     }
 }

@@ -16,7 +16,7 @@ public class Config_1 {
         Gson gson = new Gson();
         workshops = gson.fromJson(new FileReader(rutaValida), Workshops.class);
         lastSolucion = new int [workshops.getWorkshops().size()];
-         return workshops;
+        return workshops;
 
     }
 
