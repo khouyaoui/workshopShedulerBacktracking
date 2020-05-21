@@ -66,8 +66,6 @@ public class Main {
 
             int lastSolucion [] = configs_1.lastSolucion();
 
-
-
              for (int i = 0; i < workshops.getWorkshops().size(); i++) {
                  if (lastSolucion[i] == 1){
                      System.out.print(" --> "+workshops.getWorkshops().get(i).getAcronym());
