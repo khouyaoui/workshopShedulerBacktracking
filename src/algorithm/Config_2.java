@@ -59,14 +59,13 @@ public class Config_2 implements Backtracking {
         return configuracion[k] < 1;
 
     }
-    
+
     public void tratarSolucion(int [] configuracion, int k) {
         if (sumaHoras(configuracion) > maxHoras){
             System.arraycopy(configuracion, 0, configMaxHoras, 0, configuracion.length);
             maxHoras = sumaHoras(configuracion);
         }
     }
-
     public void backTracking(int [] configuracion, int k) {
         prepararRecorrigoNivel(configuracion, k);
         while (haySucesor(configuracion, k)) {
