@@ -1,8 +1,6 @@
-package logical;
+package Program;
 import Model.Workshops;
-import algorithm.Config_1;
-import algorithm.Config_2;
-import algorithm.Config_3;
+ import Algorithm.*;
 import view.ScheduleView;
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +17,7 @@ public class Main {
         // vars
          Config_1 configs_1 = new Config_1();
          Config_2 configs_2 = new Config_2();
-         //Config_3 configs_3 = new Config_3();
+         Config_3 configs_3 = new Config_3();
         Workshops workshops;
          final ScheduleView view = new ScheduleView();
 
@@ -73,7 +71,7 @@ public class Main {
              }
             System.out.println("\n soluciones: "+configs_1.totalSolucion());
 
-            System.out.println("---------------------op 2--------------------------");
+            System.out.println("---------------------opcion 2--------------------------");
             workshops = configs_2.parseToObject("resources\\50w.json");
             configs_2.backTracking(configuracion, 0);
 
@@ -84,6 +82,19 @@ public class Main {
                     System.out.print(" --> " + workshops.getWorkshops().get(i).getAcronym());
                 }
             }
+
+         System.out.println("\n---------------------opcion 3--------------------------");
+         workshops = configs_3.parseToObject("resources\\50w.json");
+         configs_3.setMaxPresopuestoUsuario();
+         configs_3.backTracking(configuracion, 0);
+
+         int maxPresupuesto [] = configs_3.maxPresupuesto();
+
+         for (int i = 0; i < workshops.getWorkshops().size(); i++) {
+             if (maxPresupuesto [i] == 1) {
+                 System.out.print(" --> " + workshops.getWorkshops().get(i).getAcronym());
+             }
+         }
             System.exit(0);
 
          SwingUtilities.invokeLater(() -> view.setVisible(true));

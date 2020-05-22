@@ -1,7 +1,5 @@
-package algorithm;
-
+package Algorithm;
 import Model.Backtracking;
-import Model.Timetable;
 import Model.Workshops;
 import com.google.gson.Gson;
 

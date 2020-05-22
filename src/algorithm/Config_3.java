@@ -1,16 +1,20 @@
-package algorithm;
-
+package Algorithm;
 import Model.Backtracking;
-import Model.Workshops;
+ import Model.Workshops;
 import com.google.gson.Gson;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Config_3 implements Backtracking {
 
-    private Double presupuesto;
+    private Double presupuestoUsuario = 0d;
+    private Double presupuesto_tmp = 0d;
+
     int [] configMaxPresupuesto;
     Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
 
@@ -59,9 +63,11 @@ public class Config_3 implements Backtracking {
 
     public void tratarSolucion(int [] configuracion, int k) {
 
-        if (sumaHoras(configuracion) > presupuesto){
-            System.arraycopy(configuracion, 0, configMaxHoras, 0, configuracion.length);
-            presupuesto = sumaHoras(configuracion);
+        Double tmp =  sumaPrecio(configuracion);
+
+        if (tmp > presupuesto_tmp && tmp <= presupuestoUsuario  ){
+            System.arraycopy(configuracion, 0, configMaxPresupuesto, 0, configuracion.length);
+            presupuesto_tmp = tmp;
         }
     }
     public void backTracking(int [] configuracion, int k) {
@@ -81,33 +87,39 @@ public class Config_3 implements Backtracking {
         }
     }
 
-    public int [] maxHoras () {
-        return configMaxHoras;
+    public int [] maxPresupuesto () {
+        return configMaxPresupuesto;
     }
 
-    public int sumaHoras(int [] configuracion) {
-        int sum = 0;
-        for (int i = 0; i < configuracion.length; i++) {
-            if (configuracion [i] == 1 ){
-                sum += workshops.getWorkshops().get(i).getTimetable().size();
+    public Double sumaPrecio(int [] configuracion) {
+        Double sum = 0d;
+        String acron [] = new String[configuracion.length];
+
+         for (int i = 0,j=0; i < configuracion.length; i++) {
+            if (configuracion [i] == 1 && Arrays.asList(acron).contains(workshops.getWorkshops().get(i).getAcronym()) ){
+                acron[j] = workshops.getWorkshops().get(i).getAcronym();
+                j++;
+                sum += workshops.getWorkshops().get(i).getPrice();
+                System.out.println(i+"  "+j+"  "+acron[i]);
             }
         }
-        return sum;
+         return sum;
     }
 
-    public void gePresopuestoUsuario(){
-
+    public void setMaxPresopuestoUsuario(){
+/*
         Scanner scanner = new Scanner(System.in);
         do {
             try {
                 System.out.println("Cual es el presupuesto disponible? (€) ");
-                presupuesto = scanner.nextDouble();
+                presupuestoUsuario = scanner.nextDouble();
             }catch (NumberFormatException e){
                 System.out.println("Ups, se esperaba un precio en numeros");
             }
 
         }while (!scanner.hasNextDouble());
+*/
+        presupuestoUsuario = 40d;
 
-        presupuesto = 40d;
     }
 }
