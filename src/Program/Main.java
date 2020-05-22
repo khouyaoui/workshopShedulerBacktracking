@@ -5,30 +5,32 @@ import view.ScheduleView;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
-
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class Main {
      public static void main(String[] args) throws FileNotFoundException {
         // vars
-         Config_1 configs_1 = new Config_1();
-         Config_2 configs_2 = new Config_2();
-         Config_3 configs_3 = new Config_3();
-        Workshops workshops;
+
+         String opcion;
+         Workshops workshops;
          final ScheduleView view = new ScheduleView();
+         int configuracion[];
+         int configuracion_Final [];
+         boolean existe = false;
+         List<String> rutas = null;
+         String selectedFile;
+         Scanner scanner = new Scanner(System.in);
 
-        boolean existe = false;
-        List<String> rutas = null;
-        String selectedFile;
-        Scanner scanner = new Scanner(System.in);
-
-         //Prepare view
-/*
-        // user interaction
         System.out.println("--------------------------------------------------------------");
         System.out.println("-_-_--_--_--_-_--_--_ WorkshopScheduler _--_--_-_-_-_--_--_--_\n");
         System.out.println("This files contain workshops information");
@@ -57,47 +59,72 @@ public class Main {
          } while (!existe);
 
 
-*/
-         System.out.println("Selecciona un objetivo");
-            workshops = configs_1.parseToObject("resources\\150w.json");
+         do {
+             System.out.println("Selecciona un objetivo");
+             System.out.println("\t 1. Todas las configuraciones posibles.");
+             System.out.println("\t 2. Maximizar horas");
+             System.out.println("\t 3. Maximizar presupuesto.");
+             System.out.println();
+             System.out.print("Objetivo: ");
+             opcion = scanner.nextLine();
 
-            int configuracion [] = new int [ workshops.getWorkshops().size() ];
+         } while (!opcion.equals("1") && !opcion.equals("2") && !opcion.equals("3"));
 
-            configs_1.backTracking(configuracion, 0);
-
-            int lastSolucion [] = configs_1.lastSolucion();
-
-             for (int i = 0; i < workshops.getWorkshops().size(); i++) {
-                 if (lastSolucion[i] == 1){
-                     System.out.print(" --> "+workshops.getWorkshops().get(i).getAcronym());
+         switch (opcion){
+             case "1":
+                 Config_1 configs_1 = new Config_1();
+                 workshops = configs_1.parseToObject(selectedFile);
+                 configuracion = new int[workshops.getWorkshops().size()];
+                 configs_1.backTracking(configuracion,0);
+                 configuracion_Final = configs_1.lastSolucion();
+                 for (int i = 0; i < workshops.getWorkshops().size(); i++) {
+                     if (configuracion_Final[i] == 1){
+                         System.out.print(" --> "+workshops.getWorkshops().get(i).getAcronym());
+                     }
                  }
-             }
-            System.out.println("\n soluciones: "+configs_1.totalSolucion());
 
-            System.out.println("---------------------opcion 2--------------------------");
-            workshops = configs_2.parseToObject("resources\\150w.json");
-            configs_2.backTracking(configuracion, 0);
+                 break;
+             case "2":
+                 Config_2 configs_2 = new Config_2();
+                 workshops = configs_2.parseToObject(selectedFile);
+                 configuracion = new int[workshops.getWorkshops().size()];
+                 configs_2.backTracking(configuracion, 0);
+                 configuracion_Final = configs_2.maxHoras();
+                 for (int i = 0; i < workshops.getWorkshops().size(); i++) {
+                     if (configuracion_Final [i] == 1) {
+                         System.out.print(" --> " + workshops.getWorkshops().get(i).getAcronym());
+                     }
+                 }
+                 //
+                 break;
+             case "3":
+                 Double presupuesto = 0d;
+                 do {
+                     try {
+                         System.out.print("\n¿Cual es el presupuesto disponible? (€) ");
+                         presupuesto = scanner.nextDouble();
+                     }catch (NumberFormatException e){
+                         System.out.println("Ups, se esperaba un precio en numeros");
+                     }
+                 }while (!scanner.hasNextDouble());
+                 Config_3 configs_3 = new Config_3();
+                 workshops = configs_3.parseToObject(selectedFile);
+                 configuracion = new int[workshops.getWorkshops().size()];
+                 configs_3.setMaxPresopuestoUsuario(presupuesto);
+                 configs_3.backTracking(configuracion, 0);
+                 configuracion_Final = configs_3.maxPresupuesto();
+                 for (int i = 0; i < workshops.getWorkshops().size(); i++) {
+                     if (configuracion_Final [i] == 1) {
+                         System.out.print(" --> " + workshops.getWorkshops().get(i).getAcronym());
+                     }
+                 }
 
-            int maxHorasConfig [] = configs_2.maxHoras();
 
-            for (int i = 0; i < workshops.getWorkshops().size(); i++) {
-                if (maxHorasConfig [i] == 1) {
-                    System.out.print(" --> " + workshops.getWorkshops().get(i).getAcronym());
-                }
-            }
-
-         System.out.println("\n---------------------opcion 3--------------------------");
-         workshops = configs_3.parseToObject("resources\\150w.json");
-         configs_3.setMaxPresopuestoUsuario();
-         configs_3.backTracking(configuracion, 0);
-
-         int maxPresupuesto [] = configs_3.maxPresupuesto();
-
-         for (int i = 0; i < workshops.getWorkshops().size(); i++) {
-             if (maxPresupuesto [i] == 1) {
-                 System.out.print(" --> " + workshops.getWorkshops().get(i).getAcronym());
-             }
+                 break;
+             default:
+                 System.out.println("bye!");
          }
+
             System.exit(0);
 
          SwingUtilities.invokeLater(() -> view.setVisible(true));

@@ -14,10 +14,10 @@ public class Config_3 implements Backtracking {
 
     private Double presupuestoUsuario = 0d;
     private Double presupuesto_tmp = 0d;
+    private Double tmp = 0d;
 
     int [] configMaxPresupuesto;
     Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
-
     public Workshops parseToObject(String rutaValida) throws FileNotFoundException {
         Gson gson = new Gson();
         workshops = gson.fromJson(new FileReader(rutaValida), Workshops.class);
@@ -62,13 +62,13 @@ public class Config_3 implements Backtracking {
     }
 
     public void tratarSolucion(int [] configuracion, int k) {
-
-        Double tmp =  sumaPrecio(configuracion);
-
-        if (tmp > presupuesto_tmp && tmp <= presupuestoUsuario  ){
+        tmp = sumaPrecio(configuracion);
+         if (tmp > presupuesto_tmp && tmp <= presupuestoUsuario ){
             System.arraycopy(configuracion, 0, configMaxPresupuesto, 0, configuracion.length);
             presupuesto_tmp = tmp;
         }
+
+
     }
     public void backTracking(int [] configuracion, int k) {
         prepararRecorrigoNivel(configuracion, k);
@@ -86,40 +86,29 @@ public class Config_3 implements Backtracking {
             }
         }
     }
-
     public int [] maxPresupuesto () {
-        return configMaxPresupuesto;
+  
+         return configMaxPresupuesto;
     }
-
     public Double sumaPrecio(int [] configuracion) {
         Double sum = 0d;
-        String acron [] = new String[configuracion.length];
-
-         for (int i = 0,j=0; i < configuracion.length; i++) {
-            if (configuracion [i] == 1 && Arrays.asList(acron).contains(workshops.getWorkshops().get(i).getAcronym()) ){
-                acron[j] = workshops.getWorkshops().get(i).getAcronym();
-                j++;
+        List<Integer> categoras= new ArrayList<>();
+        for (int i = 0; i < configuracion.length; i++) {
+            if (configuracion [i] == 1 ){
                 sum += workshops.getWorkshops().get(i).getPrice();
-                System.out.println(i+"  "+j+"  "+acron[i]);
+                if (!categoras.contains(workshops.getWorkshops().get(i).getCategory())){
+                    categoras.add(workshops.getWorkshops().get(i).getCategory());
+                }
             }
         }
-         return sum;
+        if (categoras.size() == 2){
+            return sum - (sum * 0.05);
+        }
+        if (categoras.size() > 2){
+            return sum - (sum * 0.15);
+        }
+        return sum;
     }
 
-    public void setMaxPresopuestoUsuario(){
-/*
-        Scanner scanner = new Scanner(System.in);
-        do {
-            try {
-                System.out.println("Cual es el presupuesto disponible? (€) ");
-                presupuestoUsuario = scanner.nextDouble();
-            }catch (NumberFormatException e){
-                System.out.println("Ups, se esperaba un precio en numeros");
-            }
-
-        }while (!scanner.hasNextDouble());
-*/
-        presupuestoUsuario = 40d;
-
-    }
+    public void setMaxPresopuestoUsuario(Double p){ presupuestoUsuario = p; }
 }
