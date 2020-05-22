@@ -55,8 +55,11 @@ public class Main {
                  System.out.println(":( Ruta no válida, vuelve a intentarlo");
              }
          } while (!existe);
+
+
 */
-            workshops = configs_1.parseToObject("resources\\50w.json");
+         System.out.println("Selecciona un objetivo");
+            workshops = configs_1.parseToObject("resources\\150w.json");
 
             int configuracion [] = new int [ workshops.getWorkshops().size() ];
 
@@ -72,7 +75,7 @@ public class Main {
             System.out.println("\n soluciones: "+configs_1.totalSolucion());
 
             System.out.println("---------------------opcion 2--------------------------");
-            workshops = configs_2.parseToObject("resources\\50w.json");
+            workshops = configs_2.parseToObject("resources\\150w.json");
             configs_2.backTracking(configuracion, 0);
 
             int maxHorasConfig [] = configs_2.maxHoras();
@@ -84,7 +87,7 @@ public class Main {
             }
 
          System.out.println("\n---------------------opcion 3--------------------------");
-         workshops = configs_3.parseToObject("resources\\50w.json");
+         workshops = configs_3.parseToObject("resources\\150w.json");
          configs_3.setMaxPresopuestoUsuario();
          configs_3.backTracking(configuracion, 0);
 

@@ -1,4 +1,4 @@
-package algorithm;
+package Algorithm;
 import Model.Timetable;
 import com.google.gson.Gson;
 import Model.Workshops;
