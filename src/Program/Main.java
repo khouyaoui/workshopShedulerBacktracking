@@ -1,7 +1,8 @@
 package Program;
+import Model.Timetable;
 import Model.Workshops;
  import Algorithm.*;
-import view.ScheduleView;
+import View.ScheduleView;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -10,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
@@ -30,7 +32,11 @@ public class Main {
          List<String> rutas = null;
          String selectedFile;
          Scanner scanner = new Scanner(System.in);
+         LocalDateTime aux;
 
+         view.setStartDateContent(LocalDateTime.now());
+
+/*
         System.out.println("--------------------------------------------------------------");
         System.out.println("-_-_--_--_--_-_--_--_ WorkshopScheduler _--_--_-_-_-_--_--_--_\n");
         System.out.println("This files contain workshops information");
@@ -39,7 +45,7 @@ public class Main {
             rutas = walk.filter(Files::isRegularFile)
                     .map(x -> x.toString()).collect(Collectors.toList());
             for (String filename: rutas) {
-                System.out.println("- "+filename.substring(10)+" --> ruta valida: "+filename);
+                System.out.println("\t- "+filename.substring(10)+" --> "+filename);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,7 +68,7 @@ public class Main {
          do {
              System.out.println("Selecciona un objetivo");
              System.out.println("\t 1. Todas las configuraciones posibles.");
-             System.out.println("\t 2. Maximizar horas");
+             System.out.println("\t 2. Maximizar horas.");
              System.out.println("\t 3. Maximizar presupuesto.");
              System.out.println();
              System.out.print("Objetivo: ");
@@ -123,9 +129,20 @@ public class Main {
                  break;
              default:
                  System.out.println("bye!");
-         }
+         }  */
 
-            System.exit(0);
+         Config_1 configs_1 = new Config_1();
+         workshops = configs_1.parseToObject("resources\\200w.json");
+         configuracion = new int[workshops.getWorkshops().size()];
+         configs_1.backTracking(configuracion,0);
+         configuracion_Final = configs_1.lastSolucion();
+         for (int i = 0; i < workshops.getWorkshops().size(); i++) {
+             if (configuracion_Final[i] == 1){
+                 System.out.print(" --> "+workshops.getWorkshops().get(i).getAcronym());
+             }
+         }
+         System.out.println("\nSoluciones totales: "+configs_1.totalSolucion());
+
 
          SwingUtilities.invokeLater(() -> view.setVisible(true));
 
@@ -171,14 +188,15 @@ public class Main {
         categories[1 - 1]--;
 
         //Set generic information
-        view.setStartDateContent(LocalDateTime.now());
         view.setFinishDateContent(LocalDateTime.now());
+
         view.setDurationContent(Duration.ZERO);
-        view.setSolutionsContent(10);
+
+        view.setSolutionsContent(configs_1.totalSolucion());
 
         //Set time optimization information
         view.setTotalWorkshopsContent(57);
-        view.setTotalHoursContent(57);
+        view.setTotalHoursContent(123);
 
         //Set cost information
         view.setLimitCostContent(10000);

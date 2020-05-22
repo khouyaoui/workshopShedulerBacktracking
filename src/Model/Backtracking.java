@@ -20,6 +20,6 @@ public interface Backtracking {
 
     public void backTracking(int [] configuracion, int k);
 
-
+    public int  totalSolucion ();
 
 }
