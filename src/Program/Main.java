@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -122,23 +123,42 @@ public class Main {
                 Double precioFinal = config_3.sumaPrecio(configuracion_Final);
                 Double precioBase = config_3.getBase();
 
-                float descuento =(float) (((precioBase-precioFinal) / precioBase) * 100);
+                float descuento = (float) (((precioBase-precioFinal) / precioBase) * 100);
                 descuento = Math.round(descuento);
                 view.setLimitCostContent(presupuesto.floatValue());
                 view.setBaseCostContent(precioBase.floatValue());
                 view.setFinalCostContent(precioFinal.floatValue());  //OK
                 view.setDiscountContent((int) descuento);
+                List<String> aux = new ArrayList<>();
 
-                for (int co = 0; co < configuracion_Final.length; co++) {
-                    if (configuracion_Final[co] == 1) {
-                        for (int c = 0; c < categories.length; c++) {
-                            if (workshops.getWorkshops().get(co).getCategory() == c+1) {
-                                view.setCategoryContent(c + 1, categories[c]);
-                             }
+                for (int i = 0; i < configuracion_Final.length; i++) {
+                    if (configuracion_Final[i] == 1) {
+                        if (!aux.contains(workshops.getWorkshops().get(i).getAcronym())) {
+                            aux.add(workshops.getWorkshops().get(i).getAcronym());
+                            int categoria = workshops.getWorkshops().get(i).getCategory();
+                            switch (categoria){
+                                case 1:
+                                    categories[0]++;
+                                    break;
+                                case 2:
+                                    categories[1]++;
+                                    break;
+                                case 3:
+                                    categories[2]++;
+                                    break;
+                                case 4:
+                                    categories[3]++;
+                                    break;
+                                case 5:
+                                    categories[4]++;
+                                    break;
+                            }
                         }
                      }
                  }
-
+                for (int j = 0; j < categories.length; j++) {
+                        view.setCategoryContent(j + 1, categories[j]);
+                }
 
                 break;
         }
