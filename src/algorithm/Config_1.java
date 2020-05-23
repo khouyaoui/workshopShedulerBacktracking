@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Config_1 implements Backtracking {
 
-    int soluciones = 0;
-    int[] lastSolucion;
+    private int soluciones = 0;
+    private int [] lastSolucion;
 
     Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
     public Workshops parseToObject(String rutaValida) throws FileNotFoundException {
@@ -20,8 +20,6 @@ public class Config_1 implements Backtracking {
         return workshops;
 
     }
-
-
     public boolean buena(int configuracion[], int k) {  //
         if (configuracion[k] == 0) {
             return true;
@@ -86,14 +84,8 @@ public class Config_1 implements Backtracking {
     public int  totalSolucion () {
         return soluciones;
     }
-
     @Override
-    public Integer getMaxHoras() {
-        return 0;
-    }
-
+    public Integer getMaxHoras() {return 0; }
     @Override
-    public Integer totalW() {
-        return null;
-    }
+    public Integer totalW() { return null; }
 }
