@@ -1,26 +1,24 @@
-package Algorithm;
+package Algorithms;
 import Model.Backtracking;
-import Model.Workshops;
 import com.google.gson.Gson;
+import Model.Workshops;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-public class Config_2 implements Backtracking {
+public class Config_1 implements Backtracking {
 
-    private boolean mejoras;
-    private int maxHoras = 0;
-    private int [] configMaxHoras;
     private int soluciones = 0;
-    private Workshops workshops = new Workshops();
+    private int [] lastSolucion;
+    boolean mejoras;
 
+    Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
     public Workshops parseToObject(String rutaValida) throws FileNotFoundException {
         Gson gson = new Gson();
         workshops = gson.fromJson(new FileReader(rutaValida), Workshops.class);
-        configMaxHoras = new int [workshops.getWorkshops().size()];
+        lastSolucion = new int [workshops.getWorkshops().size()];
         return workshops;
 
     }
-
     public boolean buena(int configuracion[], int k) {  //
         if (configuracion[k] == 0) {
             return true;
@@ -50,25 +48,19 @@ public class Config_2 implements Backtracking {
         configuracion[k]++;   // = configuracion [k]+1 ; // decidir ir ws
     }
     public void prepararRecorrigoNivel(int [] configuracion, int k) {
-        configuracion [k] = -1;
+        configuracion[k] = -1;
     }
     public boolean haySucesor(int []configuracion, int k) {
         return configuracion[k] < 1;
-
     }
 
     public void tratarSolucion(int [] configuracion, int k) {
-         int sum = sumaHoras(configuracion);
-          if (sum > maxHoras){
-                 System.arraycopy(configuracion, 0, configMaxHoras, 0, configuracion.length);
-                 maxHoras = sum;
-                 soluciones = 0;
-          }
-          if (sum == maxHoras){
-              soluciones ++;
-          }
+        soluciones++;
+        System.arraycopy(configuracion, 0, lastSolucion, 0, configuracion.length);
     }
+
     public void backTracking(int [] configuracion, int k) {
+
         prepararRecorrigoNivel(configuracion, k);
         while (haySucesor(configuracion, k)) {
             seguienteHermano(configuracion, k);
@@ -85,42 +77,18 @@ public class Config_2 implements Backtracking {
         }
     }
 
-    @Override
-    public int totalSolucion() {
+    public int [] lastSolucion () {
+        return lastSolucion;
+    }
+    public int  totalSolucion () {
         return soluciones;
     }
-
-    public int [] maxHoras () {
-        return configMaxHoras;
-    }
-
-    public int sumaHoras(int [] configuracion) {
-        int sum = 0;
-        for (int i = 0; i < configuracion.length; i++) {
-            if (configuracion [i] == 1 ){
-                sum += workshops.getWorkshops().get(i).getTimetable().size();
-            }
-        }
-        return sum;
-     }
-
-     public Integer getMaxHoras (){
-        return maxHoras;
-     }
-
-     public Integer totalW (){
-        Integer tmp = 0;
-         for (int i = 0; i < configMaxHoras.length; i++) {
-             if (configMaxHoras[i]==1){
-                 tmp++;
-             }
-         }
-         return tmp;
-     }
-
     @Override
-    public void setMejoras(boolean respuesta) {
+    public Integer getMaxHoras() {return 0; }
+    @Override
+    public Integer totalW() { return null; }
+
+    public void setMejoras(boolean respuesta){
         mejoras = respuesta;
     }
-
 }

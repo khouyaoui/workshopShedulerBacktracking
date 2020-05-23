@@ -1,4 +1,4 @@
-package Algorithm;
+package Algorithms;
 import Model.Backtracking;
  import Model.Workshops;
 import com.google.gson.Gson;
@@ -6,9 +6,7 @@ import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class Config_3 implements Backtracking {
 
@@ -64,13 +62,14 @@ public class Config_3 implements Backtracking {
     }
 
     public void tratarSolucion(int [] configuracion, int k) {
-
          tmp = sumaPrecio(configuracion);
-
          if (tmp > presupuesto_tmp && tmp <= presupuestoUsuario ){
             System.arraycopy(configuracion, 0, configMaxPresupuesto, 0, configuracion.length);
             presupuesto_tmp = tmp;
-            soluciones++;
+            soluciones = 0;
+         }
+        if ( tmp.equals(presupuesto_tmp)){
+            soluciones ++;
         }
     }
     public void backTracking(int [] configuracion, int k) {
