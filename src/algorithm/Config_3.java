@@ -15,6 +15,7 @@ public class Config_3 implements Backtracking {
     private Double presupuestoUsuario = 0d;
     private Double presupuesto_tmp = 0d;
     private Double tmp = 0d;
+    int soluciones = 0;
 
     int [] configMaxPresupuesto;
     Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
@@ -62,13 +63,12 @@ public class Config_3 implements Backtracking {
     }
 
     public void tratarSolucion(int [] configuracion, int k) {
+        soluciones++;
         tmp = sumaPrecio(configuracion);
          if (tmp > presupuesto_tmp && tmp <= presupuestoUsuario ){
             System.arraycopy(configuracion, 0, configMaxPresupuesto, 0, configuracion.length);
             presupuesto_tmp = tmp;
         }
-
-
     }
     public void backTracking(int [] configuracion, int k) {
         prepararRecorrigoNivel(configuracion, k);
@@ -86,6 +86,22 @@ public class Config_3 implements Backtracking {
             }
         }
     }
+
+    @Override
+    public int totalSolucion() {
+        return soluciones;
+    }
+
+    @Override
+    public Integer getMaxHoras() {
+        return null;
+    }
+
+    @Override
+    public Integer totalW() {
+        return null;
+    }
+
     public int [] maxPresupuesto () {
   
          return configMaxPresupuesto;

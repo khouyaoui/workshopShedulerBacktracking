@@ -1,4 +1,5 @@
 package Algorithm;
+import Model.Backtracking;
 import Model.Timetable;
 import com.google.gson.Gson;
 import Model.Workshops;
@@ -6,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 
-public class Config_1 {
+public class Config_1 implements Backtracking {
 
     int soluciones = 0;
     int[] lastSolucion;
@@ -84,5 +85,15 @@ public class Config_1 {
     }
     public int  totalSolucion () {
         return soluciones;
+    }
+
+    @Override
+    public Integer getMaxHoras() {
+        return 0;
+    }
+
+    @Override
+    public Integer totalW() {
+        return null;
     }
 }

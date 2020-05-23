@@ -22,4 +22,7 @@ public interface Backtracking {
 
     public int  totalSolucion ();
 
+    public Integer getMaxHoras ();
+
+    public Integer totalW();
 }

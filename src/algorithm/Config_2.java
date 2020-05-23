@@ -10,8 +10,9 @@ import java.util.List;
 public class Config_2 implements Backtracking {
 
     static int maxHoras = 0;
-    int [] configMaxHoras;
-    Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
+    private int [] configMaxHoras;
+    private int soluciones = 0;
+    private Workshops workshops = new Workshops();
 
     public Workshops parseToObject(String rutaValida) throws FileNotFoundException {
         Gson gson = new Gson();
@@ -58,7 +59,7 @@ public class Config_2 implements Backtracking {
     }
 
     public void tratarSolucion(int [] configuracion, int k) {
-
+        soluciones++;
          if (sumaHoras(configuracion) > maxHoras){
             System.arraycopy(configuracion, 0, configMaxHoras, 0, configuracion.length);
             maxHoras = sumaHoras(configuracion);
@@ -81,6 +82,11 @@ public class Config_2 implements Backtracking {
         }
     }
 
+    @Override
+    public int totalSolucion() {
+        return soluciones;
+    }
+
     public int [] maxHoras () {
         return configMaxHoras;
     }
@@ -94,4 +100,19 @@ public class Config_2 implements Backtracking {
         }
         return sum;
      }
+
+     public Integer getMaxHoras (){
+        return maxHoras;
+     }
+
+     public Integer totalW (){
+        Integer tmp = 0;
+         for (int i = 0; i < configMaxHoras.length; i++) {
+             if (configMaxHoras[i]==1){
+                 tmp++;
+             }
+         }
+         return tmp;
+     }
+
 }
