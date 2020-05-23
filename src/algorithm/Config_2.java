@@ -2,11 +2,8 @@ package Algorithm;
 import Model.Backtracking;
 import Model.Workshops;
 import com.google.gson.Gson;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Arrays;
-import java.util.List;
 
 public class Config_2 implements Backtracking {
 
@@ -65,7 +62,10 @@ public class Config_2 implements Backtracking {
           if (sum > maxHoras){
                  System.arraycopy(configuracion, 0, configMaxHoras, 0, configuracion.length);
                  maxHoras = sum;
-                 soluciones ++;
+                 soluciones = 0;
+          }
+          if (sum == maxHoras){
+              soluciones ++;
           }
     }
     public void backTracking(int [] configuracion, int k) {

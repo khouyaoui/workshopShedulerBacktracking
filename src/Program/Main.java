@@ -1,34 +1,20 @@
 package Program;
-
-import Model.Timetable;
 import Model.Workshops;
 import Algorithm.*;
 import View.ScheduleView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputFilter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
 
         Workshops workshops = null;
         final ScheduleView view = new ScheduleView();
-        int configuracion[];
-        int configuracion_Final[] = null;
+        int configuracion [];
+        int configuracion_Final [] = null;
         Integer totalSoluciones = null;
         LocalDateTime start = null, fin = null;
 
@@ -63,11 +49,11 @@ public class Main {
                 view.setTotalHoursContent(config_2.getMaxHoras());
                 break;
             case "3":
-                Double presupuesto = CLI.Eleccionpresupuesto();
                 Config_3 config_3 = new Config_3();
                 workshops = config_3.parseToObject(selectedFile);
                 configuracion = new int[workshops.getWorkshops().size()];
                 // antes de llamar al algoritmo
+                Double presupuesto = CLI.Eleccionpresupuesto();
                 config_3.setMaxPresopuestoUsuario(presupuesto);
                 config_3.setMejoras(CLI.aplicarMejoras());
                 start = LocalDateTime.now();

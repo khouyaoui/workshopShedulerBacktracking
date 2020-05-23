@@ -17,8 +17,8 @@ public class CLI {
     public static boolean aplicarMejoras(){
         String respuesta;
         do {
-            System.out.print("¿Quieres aplicar mejoras en la eficiencia? '(s/n)' ");
-            respuesta = s.nextLine();
+            System.out.print("¿Quieres aplicar mejoras en la eficiencia? '( s/n )' ");
+            respuesta = s.next();
             if (respuesta.equalsIgnoreCase("s")){
                 return true;
             }
@@ -29,7 +29,6 @@ public class CLI {
         return false;
     }
 
-
     public static String EleccionUsuario(){
         String opcion;
         do {
@@ -39,7 +38,7 @@ public class CLI {
             System.out.println("\t 3. Maximizar presupuesto.");
             System.out.println();
             System.out.print("Objetivo: ");
-            opcion = s.nextLine();
+            opcion = s.next();
 
         } while (!opcion.equals("1") && !opcion.equals("2") && !opcion.equals("3"));
 
@@ -67,7 +66,7 @@ public class CLI {
         System.out.println("--------------------------------------------------------------");
         do {
             System.out.print("Introduce una ruta de de algún fichero mostrado anteriormente: \n");
-            selectedFile = s.nextLine();
+            selectedFile = s.next();
             for (String ruta : rutas) {
                 if (ruta.equals(selectedFile)) {
                     existeFile = true;
