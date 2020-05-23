@@ -1,4 +1,4 @@
-package Algorithms;
+package Algorithm;
 import Model.Backtracking;
 import Model.Workshops;
 import com.google.gson.Gson;

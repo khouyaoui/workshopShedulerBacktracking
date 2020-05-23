@@ -1,6 +1,6 @@
 package Program;
 import Model.Workshops;
-import Algorithms.*;
+import Algorithm.*;
 import View.ScheduleView;
 import javax.swing.*;
 import java.awt.*;
