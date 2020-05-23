@@ -118,17 +118,16 @@ public class Main {
 
 
                 //Set cost information
-                float cost = 0;
                 int[] categories = new int[5];
                 Double precioFinal = config_3.sumaPrecio(configuracion_Final);
+                Double precioBase = config_3.getBase();
 
+                float descuento =(float) (((precioBase-precioFinal) / precioBase) * 100);
+                descuento = Math.round(descuento);
                 view.setLimitCostContent(presupuesto.floatValue());
-
-                view.setBaseCostContent(config_3.getBase().floatValue());
-
+                view.setBaseCostContent(precioBase.floatValue());
                 view.setFinalCostContent(precioFinal.floatValue());  //OK
-
-                view.setDiscountContent(15);
+                view.setDiscountContent((int) descuento);
 
                 for (int co = 0; co < configuracion_Final.length; co++) {
                     if (configuracion_Final[co] == 1) {

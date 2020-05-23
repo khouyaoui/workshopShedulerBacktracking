@@ -14,7 +14,7 @@ public class Config_3 implements Backtracking {
 
     private Double presupuestoUsuario = 0d;
     private Double presupuesto_tmp = 0d;
-    private Double tmp = 0d;
+    private Double tmp = 0d,base;
     int soluciones = 0;
 
     int [] configMaxPresupuesto;
@@ -63,11 +63,13 @@ public class Config_3 implements Backtracking {
     }
 
     public void tratarSolucion(int [] configuracion, int k) {
-        soluciones++;
-        tmp = sumaPrecio(configuracion);
+
+         tmp = sumaPrecio(configuracion);
+
          if (tmp > presupuesto_tmp && tmp <= presupuestoUsuario ){
             System.arraycopy(configuracion, 0, configMaxPresupuesto, 0, configuracion.length);
             presupuesto_tmp = tmp;
+            soluciones++;
         }
     }
     public void backTracking(int [] configuracion, int k) {
@@ -109,22 +111,29 @@ public class Config_3 implements Backtracking {
     public Double sumaPrecio(int [] configuracion) {
         Double sum = 0d;
         List<Integer> categoras= new ArrayList<>();
+        List<String> acronym = new ArrayList<>();
         for (int i = 0; i < configuracion.length; i++) {
             if (configuracion [i] == 1 ){
-                sum += workshops.getWorkshops().get(i).getPrice();
+                if (!acronym.contains(workshops.getWorkshops().get(i).getAcronym())){
+                    acronym.add(workshops.getWorkshops().get(i).getAcronym());
+                    sum = sum + workshops.getWorkshops().get(i).getPrice();
+                }
                 if (!categoras.contains(workshops.getWorkshops().get(i).getCategory())){
                     categoras.add(workshops.getWorkshops().get(i).getCategory());
                 }
             }
         }
-        if (categoras.size() == 2){
-            return sum - (sum * 0.05);
+        base = sum;
+         if (categoras.size() == 2){
+             return sum - (sum * 0.05);
         }
         if (categoras.size() > 2){
-            return sum - (sum * 0.15);
+             return sum - (sum * 0.15);
         }
-        return sum;
+         return sum;
     }
 
     public void setMaxPresopuestoUsuario(Double p){ presupuestoUsuario = p; }
+
+    public Double getBase(){return base;}
 }

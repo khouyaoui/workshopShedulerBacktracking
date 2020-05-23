@@ -5,11 +5,12 @@ import com.google.gson.Gson;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.List;
 
 public class Config_2 implements Backtracking {
 
-    static int maxHoras = 0;
+    private int maxHoras = 0;
     private int [] configMaxHoras;
     private int soluciones = 0;
     private Workshops workshops = new Workshops();
@@ -59,11 +60,12 @@ public class Config_2 implements Backtracking {
     }
 
     public void tratarSolucion(int [] configuracion, int k) {
-        soluciones++;
-         if (sumaHoras(configuracion) > maxHoras){
-            System.arraycopy(configuracion, 0, configMaxHoras, 0, configuracion.length);
-            maxHoras = sumaHoras(configuracion);
-         }
+         int sum = sumaHoras(configuracion);
+          if (sum > maxHoras){
+                 System.arraycopy(configuracion, 0, configMaxHoras, 0, configuracion.length);
+                 maxHoras = sum;
+                 soluciones++;
+          }
     }
     public void backTracking(int [] configuracion, int k) {
         prepararRecorrigoNivel(configuracion, k);
