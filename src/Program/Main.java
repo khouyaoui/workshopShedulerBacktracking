@@ -24,7 +24,6 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        // vars
 
         String opcion;
         Workshops workshops = null;
@@ -119,7 +118,6 @@ public class Main {
 
 
                 //Set cost information
-                int[] categories = new int[5];
                 Double precioFinal = config_3.sumaPrecio(configuracion_Final);
                 Double precioBase = config_3.getBase();
 
@@ -129,48 +127,16 @@ public class Main {
                 view.setBaseCostContent(precioBase.floatValue());
                 view.setFinalCostContent(precioFinal.floatValue());  //OK
                 view.setDiscountContent((int) descuento);
-                List<String> aux = new ArrayList<>();
 
-                for (int i = 0; i < configuracion_Final.length; i++) {
-                    if (configuracion_Final[i] == 1) {
-                        if (!aux.contains(workshops.getWorkshops().get(i).getAcronym())) {
-                            aux.add(workshops.getWorkshops().get(i).getAcronym());
-                            int categoria = workshops.getWorkshops().get(i).getCategory();
-                            switch (categoria){
-                                case 1:
-                                    categories[0]++;
-                                    break;
-                                case 2:
-                                    categories[1]++;
-                                    break;
-                                case 3:
-                                    categories[2]++;
-                                    break;
-                                case 4:
-                                    categories[3]++;
-                                    break;
-                                case 5:
-                                    categories[4]++;
-                                    break;
-                            }
-                        }
-                     }
-                 }
-                for (int j = 0; j < categories.length; j++) {
-                        view.setCategoryContent(j + 1, categories[j]);
+                int categorias [] = config_3.getCategorias();
+
+                for (int j = 0; j < categorias.length; j++) {
+                        view.setCategoryContent(j + 1, categorias[j]);
                 }
-
                 break;
         }
 
         SwingUtilities.invokeLater(() -> view.setVisible(true));
-
-        /*****************
-         SAMPLE CODE
-         ****************/
-
-        //Set cells content
-
 
         for (int w = 0; w < configuracion_Final.length; w++) {
             if (configuracion_Final[w] == 1) {
@@ -194,26 +160,11 @@ public class Main {
                 }
             }
         }
-
-
-        //Erase some cells
-        /*
-        view.resetCellContent(4, 0);
-        categories[1 - 1]--;
-        view.resetCellContent(11, 1);
-        categories[2 - 1]--;
-        cost -= 11.0f;
-        view.resetCellContent(0, 1);
-        categories[1 - 1]--;
-        */
         //Set generic information
         view.setStartDateContent(start);
         view.setFinishDateContent(fin);
         view.setDurationContent(Duration.between(start, fin));
         view.setSolutionsContent(totalSoluciones);
-
-        //Set time optimization information
-
 
     }
 
