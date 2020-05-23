@@ -12,9 +12,10 @@ import java.util.Scanner;
 
 public class Config_3 implements Backtracking {
 
+    boolean mejoras;
     private Double presupuestoUsuario = 0d;
     private Double presupuesto_tmp = 0d;
-    private Double tmp = 0d,base;
+    private Double tmp = 0d, base;
     int soluciones = 0;
 
     int [] configMaxPresupuesto;
@@ -104,6 +105,11 @@ public class Config_3 implements Backtracking {
         return null;
     }
 
+    @Override
+    public void setMejoras(boolean respuesta) {
+        mejoras = respuesta;
+    }
+
     public int [] maxPresupuesto () {
   
          return configMaxPresupuesto;
@@ -136,4 +142,35 @@ public class Config_3 implements Backtracking {
     public void setMaxPresopuestoUsuario(Double p){ presupuestoUsuario = p; }
 
     public Double getBase(){return base;}
+
+    public int [] getCategorias () {
+        int categorias [] = new int[5];
+        List<String> aux = new ArrayList<>();
+        for (int i = 0; i < configMaxPresupuesto.length; i++) {
+            if (configMaxPresupuesto[i] == 1) {
+                if (!aux.contains(workshops.getWorkshops().get(i).getAcronym())) {
+                    aux.add(workshops.getWorkshops().get(i).getAcronym());
+                    int categoria = workshops.getWorkshops().get(i).getCategory();
+                    switch (categoria){
+                        case 1:
+                            categorias[0]++;
+                            break;
+                        case 2:
+                            categorias[1]++;
+                            break;
+                        case 3:
+                            categorias[2]++;
+                            break;
+                        case 4:
+                            categorias[3]++;
+                            break;
+                        case 5:
+                            categorias[4]++;
+                            break;
+                    }
+                }
+            }
+        }
+        return categorias;
+    }
 }

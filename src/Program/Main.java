@@ -25,61 +25,22 @@ import java.util.stream.Stream;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
 
-        String opcion;
         Workshops workshops = null;
         final ScheduleView view = new ScheduleView();
         int configuracion[];
         int configuracion_Final[] = null;
         Integer totalSoluciones = null;
-        boolean existeFile = false;
-        List<String> rutas = null;
-        String selectedFile;
-        Scanner scanner = new Scanner(System.in);
         LocalDateTime start = null, fin = null;
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("-_-_--_--_--_-_--_--_ WorkshopScheduler _--_--_-_-_-_--_--_--_\n");
-        System.out.println("This files contain workshops information");
 
-        try (Stream<Path> walk = Files.walk(Paths.get("resources"))) {
-            rutas = walk.filter(Files::isRegularFile)
-                    .map(x -> x.toString()).collect(Collectors.toList());
-            for (String filename : rutas) {
-                System.out.println("\t- " + filename.substring(10) + " --> " + filename);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("--------------------------------------------------------------");
-        do {
-            System.out.print("Introduce una ruta de de algún fichero mostrado anteriormente: \n");
-            selectedFile = scanner.nextLine();
-            for (String ruta : rutas) {
-                if (ruta.equals(selectedFile)) {
-                    existeFile = true;
-                }
-            }
-            if (!existeFile) {
-                System.out.println(":( Ruta no válida, vuelve a intentarlo");
-            }
-        } while (!existeFile);
-
-
-        do {
-            System.out.println("Selecciona un objetivo");
-            System.out.println("\t 1. Todas las configuraciones posibles.");
-            System.out.println("\t 2. Maximizar horas.");
-            System.out.println("\t 3. Maximizar presupuesto.");
-            System.out.println();
-            System.out.print("Objetivo: ");
-            opcion = scanner.nextLine();
-
-        } while (!opcion.equals("1") && !opcion.equals("2") && !opcion.equals("3"));
-        switch (opcion) {
+        String selectedFile = CLI.EleccionFile();
+        switch (CLI.EleccionUsuario()) {
             case "1":
                 Config_1 config_1 = new Config_1();
                 workshops = config_1.parseToObject(selectedFile);
                 configuracion = new int[workshops.getWorkshops().size()];
                 // justo antes de llamar al algoritmo
+
+                config_1.setMejoras(CLI.aplicarMejoras());
                 start = LocalDateTime.now();
                 config_1.backTracking(configuracion, 0);
                 configuracion_Final = config_1.lastSolucion();
@@ -91,6 +52,8 @@ public class Main {
                 workshops = config_2.parseToObject(selectedFile);
                 configuracion = new int[workshops.getWorkshops().size()];
                 // justo antes de llamar al algoritmo
+
+                config_2.setMejoras(CLI.aplicarMejoras());
                 start = LocalDateTime.now();
                 config_2.backTracking(configuracion, 0);
                 configuracion_Final = config_2.maxHoras();
@@ -100,44 +63,35 @@ public class Main {
                 view.setTotalHoursContent(config_2.getMaxHoras());
                 break;
             case "3":
-                Double presupuesto = 0d;
-
-                System.out.print("\n¿Cual es el presupuesto disponible? (€) ");
-                presupuesto = scanner.nextDouble();
-
+                Double presupuesto = CLI.Eleccionpresupuesto();
                 Config_3 config_3 = new Config_3();
                 workshops = config_3.parseToObject(selectedFile);
                 configuracion = new int[workshops.getWorkshops().size()];
                 // antes de llamar al algoritmo
-                start = LocalDateTime.now();
                 config_3.setMaxPresopuestoUsuario(presupuesto);
+                config_3.setMejoras(CLI.aplicarMejoras());
+                start = LocalDateTime.now();
                 config_3.backTracking(configuracion, 0);
                 configuracion_Final = config_3.maxPresupuesto();
                 totalSoluciones = config_3.totalSolucion();
                 fin = LocalDateTime.now();  // tmp fin algoritmo
-
-
                 //Set cost information
                 Double precioFinal = config_3.sumaPrecio(configuracion_Final);
                 Double precioBase = config_3.getBase();
 
-                float descuento = (float) (((precioBase-precioFinal) / precioBase) * 100);
+                float descuento = (float) (((precioBase - precioFinal) / precioBase) * 100);
                 descuento = Math.round(descuento);
                 view.setLimitCostContent(presupuesto.floatValue());
                 view.setBaseCostContent(precioBase.floatValue());
                 view.setFinalCostContent(precioFinal.floatValue());  //OK
                 view.setDiscountContent((int) descuento);
-
-                int categorias [] = config_3.getCategorias();
-
+                int categorias[] = config_3.getCategorias();
                 for (int j = 0; j < categorias.length; j++) {
-                        view.setCategoryContent(j + 1, categorias[j]);
+                    view.setCategoryContent(j + 1, categorias[j]);
                 }
                 break;
         }
-
         SwingUtilities.invokeLater(() -> view.setVisible(true));
-
         for (int w = 0; w < configuracion_Final.length; w++) {
             if (configuracion_Final[w] == 1) {
                 for (int t = 0; t < workshops.getWorkshops().get(w).getTimetable().size(); t++) {

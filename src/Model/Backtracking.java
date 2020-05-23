@@ -25,4 +25,6 @@ public interface Backtracking {
     public Integer getMaxHoras ();
 
     public Integer totalW();
+
+    public void setMejoras(boolean respuesta);
 }

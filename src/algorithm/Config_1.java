@@ -11,6 +11,7 @@ public class Config_1 implements Backtracking {
 
     private int soluciones = 0;
     private int [] lastSolucion;
+    boolean mejoras;
 
     Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
     public Workshops parseToObject(String rutaValida) throws FileNotFoundException {
@@ -88,4 +89,8 @@ public class Config_1 implements Backtracking {
     public Integer getMaxHoras() {return 0; }
     @Override
     public Integer totalW() { return null; }
+
+    public void setMejoras(boolean respuesta){
+        mejoras = respuesta;
+    }
 }

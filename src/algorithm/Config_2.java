@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Config_2 implements Backtracking {
 
+    private boolean mejoras;
     private int maxHoras = 0;
     private int [] configMaxHoras;
     private int soluciones = 0;
@@ -64,7 +65,7 @@ public class Config_2 implements Backtracking {
           if (sum > maxHoras){
                  System.arraycopy(configuracion, 0, configMaxHoras, 0, configuracion.length);
                  maxHoras = sum;
-                 soluciones++;
+                 soluciones ++;
           }
     }
     public void backTracking(int [] configuracion, int k) {
@@ -116,5 +117,10 @@ public class Config_2 implements Backtracking {
          }
          return tmp;
      }
+
+    @Override
+    public void setMejoras(boolean respuesta) {
+        mejoras = respuesta;
+    }
 
 }
