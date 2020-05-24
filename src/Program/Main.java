@@ -50,7 +50,7 @@ public class Main {
                 break;
             case "3":     */
                 Config_3 config_3 = new Config_3();
-                workshops = config_3.parseToObject("resources\\150w.json");
+                workshops = config_3.parseToObject("resources\\alumnes_500w.json");
                 configuracion = new int[workshops.getWorkshops().size()];
                 // antes de llamar al algoritmo
                 Double presupuesto = 40d;//CLI.Eleccionpresupuesto();
