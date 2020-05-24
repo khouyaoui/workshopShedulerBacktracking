@@ -4,8 +4,7 @@ import Algorithm.Config_1;
 import Algorithm.Config_2;
 import Algorithm.Config_3;
 import Model.Workshops;
-import Output.XLSGenerator;
-import View.ScheduleView;
+import Views.ScheduleView;
 
 import javax.swing.*;
 import java.awt.*;

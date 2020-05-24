@@ -1,4 +1,4 @@
-package View;
+package Views;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
