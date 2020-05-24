@@ -29,11 +29,11 @@ public class Main {
                 configuracion = new int[workshops.getWorkshops().size()];
                 // justo antes de llamar al algoritmo
                 config_1.setMejoras(true);
-                    start = LocalDateTime.now();
-                    config_1.backTracking(configuracion, 0);
-                    configuracion_Final = config_1.lastSolucion();
-                    totalSoluciones = config_1.totalSolucion();
-                    fin = LocalDateTime.now();
+                start = LocalDateTime.now();
+                config_1.backTracking(configuracion, 0);
+                configuracion_Final = config_1.lastSolucion();
+                totalSoluciones = config_1.totalSolucion();
+                fin = LocalDateTime.now();
 
                 break;
             case "2":
