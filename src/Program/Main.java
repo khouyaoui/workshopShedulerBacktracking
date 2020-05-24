@@ -53,12 +53,12 @@ public class Main {
                 break;
             case "3":
                 Config_3 config_3 = new Config_3();
-                workshops = config_3.parseToObject("resources\\alumnes_500w.json");
+                workshops = config_3.parseToObject(selectedFile);
                 configuracion = new int[workshops.getWorkshops().size()];
                 // antes de llamar al algoritmo
-                Double presupuesto = 40d;//CLI.Eleccionpresupuesto();
+                Double presupuesto = CLI.Eleccionpresupuesto();
                 config_3.setMaxPresopuestoUsuario(presupuesto);
-                config_3.setMejoras(true); //(CLI.aplicarMejoras());
+                config_3.setMejoras(CLI.aplicarMejoras());
                 start = LocalDateTime.now();
                 config_3.backTracking(configuracion, 0);
                 configuracion_Final = config_3.maxPresupuesto();
@@ -110,6 +110,4 @@ public class Main {
         view.setSolutionsContent(totalSoluciones);
 
     }
-
-
 }
