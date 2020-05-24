@@ -5,12 +5,20 @@ import Model.Workshops;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+/**
+ * clase que implementar las operaciones de la primera opcion
+ */
 public class Config_1 implements Backtracking {
 
     private int soluciones = 0;
     private int [] lastSolucion;
-    boolean mejoras;
-
+    private boolean mejoras;
+    /**
+     * funcion para parsear un fichero json a objeto java
+     * @param rutaValida recibe la ruta del fichero a parsear
+     * @return devuelve un unico objeto que los workshops y su matriz particular
+     * @throws FileNotFoundException excepcion por indicar un fichero que no puede localizar (controlada)
+     */
     Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
     public Workshops parseToObject(String rutaValida) throws FileNotFoundException {
         Gson gson = new Gson();

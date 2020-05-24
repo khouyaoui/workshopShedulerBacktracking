@@ -1,5 +1,9 @@
 package Model;
 import java.io.FileNotFoundException;
+
+/**
+ * esta interfaz contiene los metodos basicos para implementar el algoritmo backtracking
+ */
 public interface Backtracking {
      Workshops parseToObject(String rutaValida) throws FileNotFoundException;
      boolean buena(int configuracion[], int k);

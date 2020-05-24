@@ -1,19 +1,24 @@
 package Program;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * clase para implementar las operaciones que tengan que ver con la entrada de datos, interactuacion con el usuario
+ */
 public class CLI {
 
     static Scanner s = new Scanner(System.in);
 
+    /**
+     * pregutna al usuario si quiere aplicar mejoras en la ejecucion
+     * @return la respuesta
+     */
     public static boolean aplicarMejoras(){
         String respuesta;
         do {
@@ -29,6 +34,10 @@ public class CLI {
         return false;
     }
 
+    /**
+     * funcion para preguntar al usuario que opcion/operacion quiere ejecutar
+     * @return la respuesta del usuario
+     */
     public static String EleccionUsuario(){
         String opcion;
         do {
@@ -45,6 +54,10 @@ public class CLI {
         return opcion;
     }
 
+    /**
+     * funcion para preguntar al usuario sobre que opcion quiiere
+     * @return devuelve la ruta del nombre del fichero a tratar
+     */
     public static String EleccionFile(){
         String selectedFile;
         boolean existeFile = false;
@@ -80,6 +93,10 @@ public class CLI {
         return selectedFile;
     }
 
+    /**
+     * funcion para preguntar al usaurio de que presupuesto dispone para la opcion 3
+     * @return un precio con decimales
+     */
     public static Double Eleccionpresupuesto(){
         Double presupuesto = 0d;
         System.out.print("\n¿Cual es el presupuesto disponible? (€) ");

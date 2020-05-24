@@ -9,7 +9,9 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * clase que implementar las operaciones de la tercera opcion
+ */
 public class Config_3 implements Backtracking {
 
     private boolean mejoras;
@@ -34,11 +36,11 @@ public class Config_3 implements Backtracking {
     }
 
     /**
-     * funcion para comprobar que complimos con las pautas indicadas hasta el momento
+     * funcion para comprobar que complimos con las pautas indicadas {no haya solapamento y que sean compatibles} hasta el momento
      * - segun la eleccion del usuario se aplican mejoras basadas en PBMSC
      * la respyesta del usuario esta en la variable @mejoras
      * @param configuracion configuracion
-     * @param k complimos hasta la k-issima k-esima
+     * @param k complimos hasta la k-esima
      * @return nos devuelve si o no complimos
      */
     public boolean buena(int[] configuracion, int k) {  //
