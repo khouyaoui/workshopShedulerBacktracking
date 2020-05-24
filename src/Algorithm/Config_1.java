@@ -13,13 +13,13 @@ public class Config_1 implements Backtracking {
     private int soluciones = 0;
     private int [] lastSolucion;
     private boolean mejoras;
+    Workshops workshops = new Workshops();
     /**
      * funcion para parsear un fichero json a objeto java
      * @param rutaValida recibe la ruta del fichero a parsear
      * @return devuelve un unico objeto que los workshops y su matriz particular
      * @throws FileNotFoundException excepcion por indicar un fichero que no puede localizar (controlada)
      */
-    Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
     public Workshops parseToObject(String rutaValida) throws FileNotFoundException {
         Gson gson = new Gson();
         workshops = gson.fromJson(new FileReader(rutaValida), Workshops.class);
@@ -64,7 +64,6 @@ public class Config_1 implements Backtracking {
 
     public void tratarSolucion(int [] configuracion, int k) {
         soluciones++;
-        System.out.println(mejoras);
         System.arraycopy(configuracion, 0, lastSolucion, 0, configuracion.length);
 
     }

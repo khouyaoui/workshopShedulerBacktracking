@@ -1,31 +1,27 @@
 package Program;
+
+import Algorithm.Config_1;
+import Algorithm.Config_2;
+import Algorithm.Config_3;
 import Model.Workshops;
-import Algorithm.*;
+import Output.XLSGenerator;
 import View.ScheduleView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-/**
- * clase principal donde empieza la ejecucion del programa
- */
 public class Main {
-    /**
-     * metodo principal
-     * @param args argomentos de entrada
-     * @throws FileNotFoundException caso de entrada erronea de ficheros json
-     */
     public static void main(String[] args) throws FileNotFoundException {
 
         Workshops workshops = null;
         final ScheduleView view = new ScheduleView();
-        int configuracion [];
-        int configuracion_Final [] = null;
+        int configuracion[];
+        int configuracion_Final[] = null;
         Integer totalSoluciones = null;
         LocalDateTime start = null, fin = null;
-/*
         String selectedFile = CLI.EleccionFile();
         switch (CLI.EleccionUsuario()) {
             case "1":
@@ -33,21 +29,20 @@ public class Main {
                 workshops = config_1.parseToObject(selectedFile);
                 configuracion = new int[workshops.getWorkshops().size()];
                 // justo antes de llamar al algoritmo
+                config_1.setMejoras(true);
+                    start = LocalDateTime.now();
+                    config_1.backTracking(configuracion, 0);
+                    configuracion_Final = config_1.lastSolucion();
+                    totalSoluciones = config_1.totalSolucion();
+                    fin = LocalDateTime.now();
 
-                config_1.setMejoras(CLI.aplicarMejoras());
-                start = LocalDateTime.now();
-                config_1.backTracking(configuracion, 0);
-                configuracion_Final = config_1.lastSolucion();
-                totalSoluciones = config_1.totalSolucion();
-                fin = LocalDateTime.now();
                 break;
-            case "2":     */
+            case "2":
                 Config_2 config_2 = new Config_2();
-                workshops = config_2.parseToObject("resources\\250w.json");
+                workshops = config_2.parseToObject(selectedFile);
                 configuracion = new int[workshops.getWorkshops().size()];
                 // justo antes de llamar al algoritmo
-
-                config_2.setMejoras(true);
+                config_2.setMejoras(CLI.aplicarMejoras());
                 start = LocalDateTime.now();
                 config_2.backTracking(configuracion, 0);
                 configuracion_Final = config_2.maxHoras();
@@ -55,30 +50,10 @@ public class Main {
                 fin = LocalDateTime.now();
                 view.setTotalWorkshopsContent(config_2.totalW());
                 view.setTotalHoursContent(config_2.getMaxHoras());
-
-                //break;
-
-
-                /*
-            case "3":     */
-/*
-                WritableWorkbook workbook = Workbook.createWorkbook(new File(selectedFile+".xls"));
-                WritableSheet sheet = workbook.createSheet("First Sheet", 0);
-                Label label11 = new Label(0,0,"Solucion 1 sin marcaje");
-                sheet.addCell(label11);
-                Label label1c = new Label(1,0,"Solucion 1 con marcaje");
-                sheet.addCell(label1c);
-                Label label2 = new Label(2,0,"Solucion 2 sin marcaje");
-                sheet.addCell(label2);
-                Label label2c = new Label(3,0,"Solucion 2 con marcaje");
-                sheet.addCell(label2c);
-                Label label3 = new Label(4,0,"Solucion 3 sin marcaje");
-                sheet.addCell(label3);
-                Label label3c = new Label(5,0,"Solucion 3 con marcaje");
-                sheet.addCell(label3c);
-
+                break;
+            case "3":
                 Config_3 config_3 = new Config_3();
-                workshops = config_3.parseToObject("resources\\50w.json");
+                workshops = config_3.parseToObject("resources\\alumnes_500w.json");
                 configuracion = new int[workshops.getWorkshops().size()];
                 // antes de llamar al algoritmo
                 Double presupuesto = 40d;//CLI.Eleccionpresupuesto();
@@ -102,9 +77,9 @@ public class Main {
                 int categorias[] = config_3.getCategorias();
                 for (int j = 0; j < categorias.length; j++) {
                     view.setCategoryContent(j + 1, categorias[j]);
-           //     }
-             //   break;    */
-        //}
+                }
+                break;
+        }
         SwingUtilities.invokeLater(() -> view.setVisible(true));
         for (int w = 0; w < configuracion_Final.length; w++) {
             if (configuracion_Final[w] == 1) {
@@ -135,5 +110,6 @@ public class Main {
         view.setSolutionsContent(totalSoluciones);
 
     }
+
 
 }
