@@ -17,7 +17,7 @@ public class Main {
         int configuracion_Final [] = null;
         Integer totalSoluciones = null;
         LocalDateTime start = null, fin = null;
-
+/*
         String selectedFile = CLI.EleccionFile();
         switch (CLI.EleccionUsuario()) {
             case "1":
@@ -48,14 +48,14 @@ public class Main {
                 view.setTotalWorkshopsContent(config_2.totalW());
                 view.setTotalHoursContent(config_2.getMaxHoras());
                 break;
-            case "3":
+            case "3":     */
                 Config_3 config_3 = new Config_3();
-                workshops = config_3.parseToObject(selectedFile);
+                workshops = config_3.parseToObject("resources\\150w.json");
                 configuracion = new int[workshops.getWorkshops().size()];
                 // antes de llamar al algoritmo
-                Double presupuesto = CLI.Eleccionpresupuesto();
+                Double presupuesto = 40d;//CLI.Eleccionpresupuesto();
                 config_3.setMaxPresopuestoUsuario(presupuesto);
-                config_3.setMejoras(CLI.aplicarMejoras());
+                config_3.setMejoras(true); //(CLI.aplicarMejoras());
                 start = LocalDateTime.now();
                 config_3.backTracking(configuracion, 0);
                 configuracion_Final = config_3.maxPresupuesto();
@@ -74,8 +74,8 @@ public class Main {
                 int categorias[] = config_3.getCategorias();
                 for (int j = 0; j < categorias.length; j++) {
                     view.setCategoryContent(j + 1, categorias[j]);
-                }
-                break;
+           //     }
+             //   break;
         }
         SwingUtilities.invokeLater(() -> view.setVisible(true));
         for (int w = 0; w < configuracion_Final.length; w++) {

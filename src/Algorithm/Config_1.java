@@ -56,7 +56,9 @@ public class Config_1 implements Backtracking {
 
     public void tratarSolucion(int [] configuracion, int k) {
         soluciones++;
+        System.out.println(mejoras);
         System.arraycopy(configuracion, 0, lastSolucion, 0, configuracion.length);
+
     }
 
     public void backTracking(int [] configuracion, int k) {

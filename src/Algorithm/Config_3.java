@@ -1,6 +1,7 @@
 package Algorithm;
+
 import Model.Backtracking;
- import Model.Workshops;
+import Model.Workshops;
 import com.google.gson.Gson;
 
 import java.io.FileNotFoundException;
@@ -9,19 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Config_3 implements Backtracking {
-
     boolean mejoras;
     private Double presupuestoUsuario = 0d;
     private Double presupuesto_tmp = 0d;
     private Double tmp = 0d, base;
     int soluciones = 0;
 
-    int [] configMaxPresupuesto;
+    int[] configMaxPresupuesto;
     Workshops workshops = new Workshops();  // toda la info de workshops parsed in object
+
     public Workshops parseToObject(String rutaValida) throws FileNotFoundException {
         Gson gson = new Gson();
         workshops = gson.fromJson(new FileReader(rutaValida), Workshops.class);
-        configMaxPresupuesto = new int [workshops.getWorkshops().size()];
+        configMaxPresupuesto = new int[workshops.getWorkshops().size()];
         return workshops;
     }
 
@@ -31,10 +32,13 @@ public class Config_3 implements Backtracking {
         }
         int indice = 0;
         while (indice < k) {
+
             if (configuracion[indice] == 1) {
+
                 if (workshops.getCompatibilityMatrix()[indice][k].equals(0)) {
                     return false;  // aqui hay incompati.  n cal seguir
                 }
+
                 for (int i = 0; i < workshops.getWorkshops().get(k).getTimetable().size(); i++) {
                     for (int j = 0; j < workshops.getWorkshops().get(indice).getTimetable().size(); j++) {
                         if (workshops.getWorkshops().get(k).getTimetable().get(i).getDay().equals(workshops
@@ -50,29 +54,34 @@ public class Config_3 implements Backtracking {
         }
         return true;
     }
-    public void seguienteHermano(int [] configuracion, int k) {
+
+    public void seguienteHermano(int[] configuracion, int k) {
         configuracion[k]++;   // = configuracion [k]+1 ; // decidir ir ws
     }
-    public void prepararRecorrigoNivel(int [] configuracion, int k) {
-        configuracion [k] = -1;
+
+    public void prepararRecorrigoNivel(int[] configuracion, int k) {
+        configuracion[k] = -1;
     }
-    public boolean haySucesor(int []configuracion, int k) {
+
+    public boolean haySucesor(int[] configuracion, int k) {
+
         return configuracion[k] < 1;
 
     }
 
-    public void tratarSolucion(int [] configuracion, int k) {
-         tmp = sumaPrecio(configuracion);
-         if (tmp > presupuesto_tmp && tmp <= presupuestoUsuario ){
+    public void tratarSolucion(int[] configuracion, int k) {
+        tmp = sumaPrecio(configuracion);
+        if (tmp > presupuesto_tmp && tmp <= presupuestoUsuario) {
             System.arraycopy(configuracion, 0, configMaxPresupuesto, 0, configuracion.length);
             presupuesto_tmp = tmp;
             soluciones = 0;
-         }
-        if ( tmp.equals(presupuesto_tmp)){
-            soluciones ++;
+        }
+        if (tmp.equals(presupuesto_tmp)) {
+            soluciones++;
         }
     }
-    public void backTracking(int [] configuracion, int k) {
+
+    public void backTracking(int[] configuracion, int k) {
         prepararRecorrigoNivel(configuracion, k);
         while (haySucesor(configuracion, k)) {
             seguienteHermano(configuracion, k);
@@ -81,7 +90,7 @@ public class Config_3 implements Backtracking {
                     tratarSolucion(configuracion, k);
                 }
             }
-            if (k < workshops.getWorkshops().size() - 1) {
+            if (k < workshops.getWorkshops().size() - 1 ) {
                 if (buena(configuracion, k)) {
                     backTracking(configuracion, k + 1); // rec
                 }
@@ -109,48 +118,53 @@ public class Config_3 implements Backtracking {
         mejoras = respuesta;
     }
 
-    public int [] maxPresupuesto () {
-  
-         return configMaxPresupuesto;
+    public int[] maxPresupuesto() {
+
+        return configMaxPresupuesto;
     }
-    public Double sumaPrecio(int [] configuracion) {
+
+    public Double sumaPrecio(int[] configuracion) {
         Double sum = 0d;
-        List<Integer> categoras= new ArrayList<>();
+        List<Integer> categoras = new ArrayList<>();
         List<String> acronym = new ArrayList<>();
         for (int i = 0; i < configuracion.length; i++) {
-            if (configuracion [i] == 1 ){
-                if (!acronym.contains(workshops.getWorkshops().get(i).getAcronym())){
+            if (configuracion[i] == 1) {
+                if (!acronym.contains(workshops.getWorkshops().get(i).getAcronym())) {
                     acronym.add(workshops.getWorkshops().get(i).getAcronym());
                     sum = sum + workshops.getWorkshops().get(i).getPrice();
                 }
-                if (!categoras.contains(workshops.getWorkshops().get(i).getCategory())){
+                if (!categoras.contains(workshops.getWorkshops().get(i).getCategory())) {
                     categoras.add(workshops.getWorkshops().get(i).getCategory());
                 }
             }
         }
         base = sum;
-         if (categoras.size() == 2){
-             return sum - (sum * 0.05);
+        if (categoras.size() == 2) {
+            return sum - (sum * 0.05);
         }
-        if (categoras.size() > 2){
-             return sum - (sum * 0.15);
+        if (categoras.size() > 2) {
+            return sum - (sum * 0.15);
         }
-         return sum;
+        return sum;
     }
 
-    public void setMaxPresopuestoUsuario(Double p){ presupuestoUsuario = p; }
+    public void setMaxPresopuestoUsuario(Double p) {
+        presupuestoUsuario = p;
+    }
 
-    public Double getBase(){return base;}
+    public Double getBase() {
+        return base;
+    }
 
-    public int [] getCategorias () {
-        int categorias [] = new int[5];
+    public int[] getCategorias() {
+        int categorias[] = new int[5];
         List<String> aux = new ArrayList<>();
         for (int i = 0; i < configMaxPresupuesto.length; i++) {
             if (configMaxPresupuesto[i] == 1) {
                 if (!aux.contains(workshops.getWorkshops().get(i).getAcronym())) {
                     aux.add(workshops.getWorkshops().get(i).getAcronym());
                     int categoria = workshops.getWorkshops().get(i).getCategory();
-                    switch (categoria){
+                    switch (categoria) {
                         case 1:
                             categorias[0]++;
                             break;
@@ -172,4 +186,14 @@ public class Config_3 implements Backtracking {
         }
         return categorias;
     }
+
+    private boolean testPBMSC (int[] configuracion) {
+        if (sumaPrecio(configuracion).floatValue() <= presupuestoUsuario.floatValue()+5){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
 }
