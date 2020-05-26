@@ -4,16 +4,24 @@ import Algorithm.Config_1;
 import Algorithm.Config_2;
 import Algorithm.Config_3;
 import Model.Workshops;
+import Output.XLSGenerator;
 import Views.ScheduleView;
+import jxl.write.WriteException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+
+    public static void main(String[] args) throws IOException, WriteException {
+
+        XLSGenerator xlsGenerator = new XLSGenerator();
+        xlsGenerator.generarXLS("resources\\alumnes_500w.json");
+        System.exit(0);
 
         Workshops workshops = null;
         final ScheduleView view = new ScheduleView();
