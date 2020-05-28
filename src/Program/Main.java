@@ -1,5 +1,4 @@
 package Program;
-
 import Algorithm.Config_1;
 import Algorithm.Config_2;
 import Algorithm.Config_3;
@@ -17,7 +16,6 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws IOException, WriteException {
-
 
         Workshops workshops = null;
         final ScheduleView view = new ScheduleView();
@@ -98,7 +96,6 @@ public class Main {
                                                     workshops.getWorkshops().get(w).getRgbColor().get(0),
                                                     workshops.getWorkshops().get(w).getRgbColor().get(1),
                                                     workshops.getWorkshops().get(w).getRgbColor().get(2)), i, j);
-
                                 }
                             }
                         }
@@ -111,8 +108,6 @@ public class Main {
         view.setFinishDateContent(fin);
         view.setDurationContent(Duration.between(start, fin));
         view.setSolutionsContent(totalSoluciones);
-
-
 /*
     if (CLI.generarCompareTime()){
         System.out.print("Cuantas ejecuciones por cada caso? ");
@@ -120,9 +115,7 @@ public class Main {
         new XLSGenerator().generarXLS(selectedFile, num);
     }
 
-
  */
     }
-
 
 }
