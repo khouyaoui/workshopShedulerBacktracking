@@ -7,21 +7,17 @@ import Model.Workshops;
 import Output.XLSGenerator;
 import Views.ScheduleView;
 import jxl.write.WriteException;
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) throws IOException, WriteException {
 
-        XLSGenerator xlsGenerator = new XLSGenerator();
-        xlsGenerator.generarXLS("resources\\alumnes_500w.json");
-        System.exit(0);
 
         Workshops workshops = null;
         final ScheduleView view = new ScheduleView();
@@ -116,5 +112,17 @@ public class Main {
         view.setDurationContent(Duration.between(start, fin));
         view.setSolutionsContent(totalSoluciones);
 
+
+/*
+    if (CLI.generarCompareTime()){
+        System.out.print("Cuantas ejecuciones por cada caso? ");
+        int num = new Scanner(System.in).nextInt();
+        new XLSGenerator().generarXLS(selectedFile, num);
     }
+
+
+ */
+    }
+
+
 }

@@ -103,4 +103,20 @@ public class CLI {
         presupuesto = s.nextDouble();
         return presupuesto;
     }
+
+    public static boolean generarCompareTime(){
+        String respuesta;
+        do {
+            System.out.println("¡Advertencia!, la ejecucion puede necesitar horas para acabarse");
+            System.out.print("¿Quieres generar XLS con varias ejecuciones para analizar los tiempos de espera? '( s/n )' ");
+            respuesta = s.next();
+            if (respuesta.equalsIgnoreCase("s")){
+                return true;
+            }
+            if (respuesta.equalsIgnoreCase("n")){
+                return false;
+            }
+        } while (!respuesta.equalsIgnoreCase("s") && !respuesta.equalsIgnoreCase("n"));
+        return false;
+    }
 }

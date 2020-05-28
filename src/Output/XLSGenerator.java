@@ -6,6 +6,7 @@ import Algorithm.Config_3;
 import Model.Workshops;
 import jxl.Workbook;
 import jxl.write.Label;
+import jxl.write.Number;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
@@ -15,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.concurrent.ExecutionException;
 
 /**
  * funcion para generar xls con resumen de tiempos que tardan en ejecutar los algoritmos
@@ -25,7 +25,7 @@ public class XLSGenerator {
     public XLSGenerator() {
     }
 
-    public void generarXLS(String rutaFile ) throws IOException, WriteException {
+    public void generarXLS(String rutaFile, int repeat) throws IOException, WriteException {
 
         Workshops workshops = null;
         int configuracion[];
@@ -63,7 +63,7 @@ public class XLSGenerator {
             Double sum_1_sinMejoras = 0d,sum_1_ConMejoras=0d,sum_2_sinMejoras=0d,sum_2_conMejoras=0d,sum_3_sinMejoras=0d,sum_3_conMejoras=0d;
 
             int i = 1;
-            for (;i < 50; i++) {
+            for (;i < repeat; i++) {
 
 
                 workshops = config_1.parseToObject(selectedFile);
@@ -76,7 +76,7 @@ public class XLSGenerator {
                 Duration duration = Duration.between(start, fin);
                 celda = timeFormatMiliSeconds(duration);
                 sum_1_sinMejoras += celda;
-                sheet.addCell(new jxl.write.Number(0, i, celda));
+                sheet.addCell(new Number(0, i, celda));
 
                 //justo antes de llamar al algoritmo
                 config_1.setMejoras(true);
@@ -86,7 +86,7 @@ public class XLSGenerator {
                 duration = Duration.between(start, fin);
                 celda = timeFormatMiliSeconds(duration);
                 sum_1_ConMejoras  += celda;
-                sheet.addCell(new jxl.write.Number(1, i, celda));
+                sheet.addCell(new Number(1, i, celda));
 
                 workshops = config_2.parseToObject(selectedFile);
                 configuracion = new int[workshops.getWorkshops().size()];
@@ -98,7 +98,7 @@ public class XLSGenerator {
                 duration = Duration.between(start, fin);
                 celda = timeFormatMiliSeconds(duration);
                 sum_2_sinMejoras += celda;
-                sheet.addCell(new jxl.write.Number(2, i, celda));
+                sheet.addCell(new Number(2, i, celda));
 
                 workshops = config_2.parseToObject(selectedFile);
                 configuracion = new int[workshops.getWorkshops().size()];
@@ -110,7 +110,7 @@ public class XLSGenerator {
                 duration = Duration.between(start, fin);
                 celda = timeFormatMiliSeconds(duration);
                 sum_2_conMejoras += celda;
-                sheet.addCell(new jxl.write.Number(3, i, celda));
+                sheet.addCell(new Number(3, i, celda));
 
                 workshops = config_3.parseToObject(selectedFile);
                 configuracion = new int[workshops.getWorkshops().size()];
@@ -124,7 +124,7 @@ public class XLSGenerator {
                 duration = Duration.between(start, fin);
                 celda = timeFormatMiliSeconds(duration);
                 sum_3_sinMejoras += celda;
-                sheet.addCell(new jxl.write.Number(4, i, celda));
+                sheet.addCell(new Number(4, i, celda));
 
                 workshops = config_3.parseToObject(selectedFile);
                 configuracion = new int[workshops.getWorkshops().size()];
@@ -138,15 +138,15 @@ public class XLSGenerator {
                 duration = Duration.between(start, fin);
                 celda = timeFormatMiliSeconds(duration);
                 sum_3_conMejoras += celda;
-                sheet.addCell(new jxl.write.Number(5, i, celda));
+                sheet.addCell(new Number(5, i, celda));
 
             }
-            sheet.addCell(new jxl.write.Number(0, i+2, sum_1_sinMejoras));
-            sheet.addCell(new jxl.write.Number(1, i+2, sum_1_ConMejoras));
-            sheet.addCell(new jxl.write.Number(2, i+2, sum_2_sinMejoras));
-            sheet.addCell(new jxl.write.Number(3, i+2, sum_2_conMejoras));
-            sheet.addCell(new jxl.write.Number(4, i+2, sum_3_sinMejoras));
-            sheet.addCell(new jxl.write.Number(5, i+2, sum_3_conMejoras));
+            sheet.addCell(new Number(0, i+2, sum_1_sinMejoras));
+            sheet.addCell(new Number(1, i+2, sum_1_ConMejoras));
+            sheet.addCell(new Number(2, i+2, sum_2_sinMejoras));
+            sheet.addCell(new Number(3, i+2, sum_2_conMejoras));
+            sheet.addCell(new Number(4, i+2, sum_3_sinMejoras));
+            sheet.addCell(new Number(5, i+2, sum_3_conMejoras));
 
             writableWorkbook.write();
             writableWorkbook.close();

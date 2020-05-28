@@ -9,8 +9,9 @@
         <module name="pom" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="11">
-      <module name="pom" target="1.5" />
+    <bytecodeTargetLevel target="14">
+      <module name="pom" target="" />
+      <module name="WorkshopSchedulerALA" target="" />
     </bytecodeTargetLevel>
   </component>
 </project>
