@@ -14,6 +14,8 @@ public class Config_1 implements Backtracking {
     private int [] lastSolucion;
     private boolean mejoras;
     Workshops workshops = new Workshops();
+
+    int p_actual =0;
     /**
      * funcion para parsear un fichero json a objeto java
      * @param rutaValida recibe la ruta del fichero a parsear
@@ -54,27 +56,40 @@ public class Config_1 implements Backtracking {
     }
     public void seguienteHermano(int [] configuracion, int k) {
         configuracion[k]++;   // = configuracion [k]+1 ; // decidir ir ws
-    }
+      }
     public void prepararRecorrigoNivel(int [] configuracion, int k) {
-        configuracion[k] = -1;
-    }
+        configuracion [k] = -1;
+      }
     public boolean haySucesor(int []configuracion, int k) {
-        return configuracion[k] < 1;
+        return configuracion [k] < 1;
     }
 
     public void tratarSolucion(int [] configuracion, int k) {
         soluciones++;
         System.arraycopy(configuracion, 0, lastSolucion, 0, configuracion.length);
+    }
+/*
 
+    public void marcar(int configuracion [], int k){
+         p_actual = p_actual + configuracion[k] * workshops.getWorkshops().get(k).getTimetable().size();
     }
 
-    public void backTracking(int [] configuracion, int k) {
+    public void descarmar(int configuracion [], int k){
+        p_actual = p_actual - configuracion[k] * workshops.getWorkshops().get(k).getTimetable().size();
+    }   */
+
+     public void backTracking(int [] configuracion, int k) {
 
         prepararRecorrigoNivel(configuracion, k);
+
         while (haySucesor(configuracion, k)) {
+            if (mejoras){
+                //marcar(configuracion,k);
+            }
+
             seguienteHermano(configuracion, k);
             if (k == workshops.getWorkshops().size() - 1) {
-                if (buena(configuracion, k)) {
+                 if (buena(configuracion, k)) {
                     tratarSolucion(configuracion, k);
                 }
             }
@@ -83,12 +98,17 @@ public class Config_1 implements Backtracking {
                     backTracking(configuracion, k + 1); // rec
                 }
             }
+            if (mejoras){
+                //descarmar(configuracion,k);
+            }
         }
     }
 
     public int [] lastSolucion () {
-        return lastSolucion;
+
+         return lastSolucion;
     }
+
     public int  totalSolucion () {
         return soluciones;
     }

@@ -19,18 +19,19 @@ public class Main {
 
         Workshops workshops = null;
         final ScheduleView view = new ScheduleView();
-        int configuracion[];
+        int configuracion [];
         int configuracion_Final[] = null;
         Integer totalSoluciones = null;
         LocalDateTime start = null, fin = null;
         String selectedFile = CLI.EleccionFile();
+
         switch (CLI.EleccionUsuario()) {
             case "1":
                 Config_1 config_1 = new Config_1();
                 workshops = config_1.parseToObject(selectedFile);
                 configuracion = new int[workshops.getWorkshops().size()];
                 // justo antes de llamar al algoritmo
-                config_1.setMejoras(true);
+                config_1.setMejoras(CLI.aplicarMejoras());
                 start = LocalDateTime.now();
                 config_1.backTracking(configuracion, 0);
                 configuracion_Final = config_1.lastSolucion();
@@ -108,14 +109,14 @@ public class Main {
         view.setFinishDateContent(fin);
         view.setDurationContent(Duration.between(start, fin));
         view.setSolutionsContent(totalSoluciones);
-/*
-    if (CLI.generarCompareTime()){
-        System.out.print("Cuantas ejecuciones por cada caso? ");
-        int num = new Scanner(System.in).nextInt();
-        new XLSGenerator().generarXLS(selectedFile, num);
-    }
 
- */
+
+        if (CLI.generarCompareTime()){
+            System.out.print("Cuantas ejecuciones por cada caso? ");
+            int num = new Scanner(System.in).nextInt();
+            new XLSGenerator().generarXLS(selectedFile, num);
+        }
+
     }
 
 }

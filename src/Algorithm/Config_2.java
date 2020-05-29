@@ -15,6 +15,7 @@ public class Config_2 implements Backtracking {
     private int soluciones = 0;
     private Workshops workshops = new Workshops();
     private int vMejor;
+    int [] xMejor;
     /**
      * funcion para parsear un fichero json a objeto java
      * @param rutaValida recibe la ruta del fichero a parsear
@@ -108,15 +109,31 @@ public class Config_2 implements Backtracking {
               soluciones ++;
           }
     }
+
+    public void marcar(int configuracion [], int k){
+        vMejor = vMejor + configuracion[k] * workshops.getWorkshops().get(k).getTimetable().size();
+        xMejor = configuracion;
+    }
+
+    public void desmarcar(int configuracion [], int k){
+        vMejor = vMejor - configuracion[k] * workshops.getWorkshops().get(k).getTimetable().size();
+        xMejor = configuracion;
+    }
+
     /**
      * algoritmo recursivo que trata de encontrar todas las posibles soluciones al problema, siguiendo con las restriccioens puestas
      * @param configuracion siempre recibe una configuracion sobre la cual irá construyendo el arbol de busqueda
      * @param k representa el nivel del arbol en el cual estado explorando
      */
     public void backTracking(int [] configuracion, int k) {
+
         prepararRecorrigoNivel(configuracion, k);
         while (haySucesor(configuracion, k)) {
-
+            if (mejoras){
+                marcar(configuracion,k);
+            }
+            marcar(configuracion,k);
+            // ma
             seguienteHermano(configuracion, k);
              if (k == workshops.getWorkshops().size() - 1) {
                 if (buena(configuracion, k)) {
@@ -130,7 +147,8 @@ public class Config_2 implements Backtracking {
                 }
 
             }
-         }
+            desmarcar(configuracion,k);
+        }
     }
     /**
      * funcion que nos devuelve el total de las soluciones encontradas segun las restricciones puestas
@@ -162,7 +180,7 @@ public class Config_2 implements Backtracking {
         }
         return sum;
      }
-
+    //
     /**
      * funcion que nos devuelve el sumatorio realizado por la funcion sumaHoras de la ultima configuracion tratada
      * @return un entero
@@ -172,13 +190,13 @@ public class Config_2 implements Backtracking {
      }
 
     /**
-     * dada una configuracion nos devuelve el sumatorio de sus correspondientes talletes que la conforman
+     * dada una configuracion nos devuelve el sumatorio de sus correspondientes talleres que la conforman
      * @return un entero
      */
      public Integer totalW (){
         Integer tmp = 0;
          for (int i = 0; i < configMaxHoras.length; i++) {
-             if (configMaxHoras[i]==1){
+             if ( configMaxHoras[i] == 1 ){
                  tmp++;
              }
          }

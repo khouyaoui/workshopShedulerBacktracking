@@ -3,38 +3,36 @@
   <ID>JAVA</ID>
   <OriginalElement>Algorithm.Config_1</OriginalElement>
   <nodes>
-    <node x="457.0" y="0.0">Model.Timetable</node>
-    <node x="267.0" y="1120.0">Algorithm.Config_3</node>
-    <node x="0.0" y="1175.0">Algorithm.Config_2</node>
-    <node x="420.0" y="193.0">Model.Workshop</node>
-    <node x="551.0" y="1230.0">Algorithm.Config_1</node>
-    <node x="409.5" y="518.0">Model.Workshops</node>
-    <node x="859.5" y="0.0">Program.CLI</node>
-    <node x="143.98684210526312" y="1797.0">Program.Main</node>
-    <node x="270.0" y="783.0">Model.Backtracking</node>
+    <node x="281.0" y="999.0">Model.Timetable</node>
+    <node x="267.0" y="327.0">Algorithm.Config_3</node>
+    <node x="551.0" y="349.0">Algorithm.Config_2</node>
+    <node x="843.0" y="0.0">Model.Workshop</node>
+    <node x="0.0" y="426.0">Algorithm.Config_1</node>
+    <node x="1103.0" y="0.0">Program.CLI</node>
+    <node x="0.0" y="999.0">Model.Workshops</node>
+    <node x="467.0" y="999.0">Program.Main</node>
+    <node x="275.5" y="0.0">Model.Backtracking</node>
   </nodes>
   <notes />
   <edges>
     <edge source="Algorithm.Config_3" target="Model.Backtracking">
-      <point x="-33.0" y="-313.5" />
-      <point x="366.0" y="1100.0" />
-      <point x="393.5" y="1100.0" />
+      <point x="0.0" y="-313.5" />
       <point x="0.0" y="138.5" />
     </edge>
     <edge source="Algorithm.Config_2" target="Model.Backtracking">
-      <point x="92.625" y="-258.5" />
-      <point x="216.125" y="1100.0" />
-      <point x="311.1666666666667" y="1100.0" />
-      <point x="-82.33333333333331" y="138.5" />
-    </edge>
-    <edge source="Algorithm.Config_1" target="Model.Backtracking">
-      <point x="-92.625" y="-203.5" />
-      <point x="581.875" y="1080.0" />
-      <point x="475.8333333333333" y="1080.0" />
+      <point x="0.0" y="-291.5" />
+      <point x="674.5" y="302.0" />
+      <point x="481.3333333333333" y="302.0" />
       <point x="82.33333333333331" y="138.5" />
     </edge>
+    <edge source="Algorithm.Config_1" target="Model.Backtracking">
+      <point x="0.0" y="-214.5" />
+      <point x="123.5" y="302.0" />
+      <point x="316.6666666666667" y="302.0" />
+      <point x="-82.33333333333331" y="138.5" />
+    </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.3052294557097118" x="533.5" y="927.0000000000001" />
+  <settings layout="Hierarchic Group" zoom="0.3062966915688369" x="364.52779169416567" y="774.1451274607822" />
   <SelectedNodes>
     <node>Program.CLI</node>
   </SelectedNodes>

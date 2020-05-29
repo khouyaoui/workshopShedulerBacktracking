@@ -47,15 +47,14 @@ public class Config_3 implements Backtracking {
         if (configuracion[k] == 0) {
             return true;
         }
-
-        if (mejoras) {
-            if (!testPBMSC(configuracion, k)) {
+        if (mejoras){
+            if (!testPBMSC(configuracion,k)){
                 return false;
             }
         }
         int indice = 0;
         while (indice < k) {
-            if (configuracion[indice] == 1) {
+            if ( configuracion[indice] == 1 ) {
 
                 if (workshops.getCompatibilityMatrix()[indice][k].equals(0)) {
                     return false;  // aqui hay incompati.  n cal seguir
@@ -185,7 +184,6 @@ public class Config_3 implements Backtracking {
      * @return devuelve la configuracion declarada como var global
      */
     public int[] maxPresupuesto() {
-
         return configMaxPresupuesto;
     }
 
@@ -277,7 +275,7 @@ public class Config_3 implements Backtracking {
      * @return
      */
     private boolean testPBMSC(int[] configuracion, int k) {
-        return sumaPrecio(configuracion, k) <= presupuestoUsuario+1;
+        return sumaPrecio(configuracion, k) <= presupuestoUsuario;
     }
 
     /**

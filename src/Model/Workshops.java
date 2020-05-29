@@ -7,6 +7,7 @@ import java.util.List;
 public class Workshops {
 
     private List<Workshop> workshops = new ArrayList<>();
+
     private Integer [][] compatibilityMatrix;
 
     /**

@@ -62,7 +62,6 @@ public class CLI {
         String selectedFile;
         boolean existeFile = false;
         List<String> rutas = null;
-
         System.out.println("--------------------------------------------------------------");
         System.out.println("-_-_--_--_--_-_--_--_ WorkshopScheduler _--_--_-_-_-_--_--_--_\n");
         System.out.println("This files contain workshops information");
@@ -92,7 +91,6 @@ public class CLI {
 
         return selectedFile;
     }
-
     /**
      * funcion para preguntar al usaurio de que presupuesto dispone para la opcion 3
      * @return un precio con decimales
@@ -103,7 +101,6 @@ public class CLI {
         presupuesto = s.nextDouble();
         return presupuesto;
     }
-
     public static boolean generarCompareTime(){
         String respuesta;
         do {
